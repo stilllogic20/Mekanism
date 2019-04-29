@@ -117,8 +117,7 @@ public class MekanismRenderer {
             spriteLocation = fluid.getFlowing();
         }
 
-        TextureAtlasSprite sprite = texMap.getTextureExtry(spriteLocation.toString());
-        return sprite != null ? sprite : missingIcon;
+        return getTextureAtlasSprite(spriteLocation);
     }
 
     public static TextureAtlasSprite getFluidTexture(FluidStack fluidStack, FluidType type) {
@@ -134,6 +133,10 @@ public class MekanismRenderer {
         } else {
             spriteLocation = fluid.getFlowing(fluidStack);
         }
+        return getTextureAtlasSprite(spriteLocation);
+    }
+
+    public static TextureAtlasSprite getTextureAtlasSprite(ResourceLocation spriteLocation) {
         TextureAtlasSprite sprite = texMap.getTextureExtry(spriteLocation.toString());
         return sprite != null ? sprite : missingIcon;
     }
@@ -294,6 +297,21 @@ public class MekanismRenderer {
     public static void disableCullFace() {
         GL11.glCullFace(GL11.GL_BACK);
         GL11.glDisable(GL11.GL_CULL_FACE);
+    }
+
+    public static void colorFluidGLSM(FluidStack fluid) {
+        int color = fluid.getFluid().getColor(fluid);
+        if (color != -1) {
+            colorGLSM(color);
+        }
+    }
+
+    public static void colorGLSM(int color) {
+        float red = (color >> 16 & 0xFF) / 255.0F;
+        float green = (color >> 8 & 0xFF) / 255.0F;
+        float blue = (color & 0xFF) / 255.0F;
+        float alpha = (color >> 24 & 0xFF) / 255f;
+        GlStateManager.color(red, green, blue, alpha);
     }
 
     public static void colorFluid(FluidStack fluid) {
