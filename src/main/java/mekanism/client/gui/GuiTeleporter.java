@@ -128,6 +128,7 @@ public class GuiTeleporter extends GuiMekanismTile<TileEntityTeleporter> {
         super.initGui();
         int guiWidth = (width - xSize) / 2;
         int guiHeight = (height - ySize) / 2;
+        final List<GuiButton> buttonList = this.buttonList;
         buttonList.clear();
         publicButton = new GuiButton(0, guiWidth + 27, guiHeight + 14, 60, 20, LangUtils.localize("gui.public"));
         privateButton = new GuiButton(1, guiWidth + 89, guiHeight + 14, 60, 20, LangUtils.localize("gui.private"));
