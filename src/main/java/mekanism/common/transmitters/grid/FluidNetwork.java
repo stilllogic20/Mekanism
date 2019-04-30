@@ -77,6 +77,7 @@ public class FluidNetwork extends DynamicNetwork<IFluidHandler, FluidNetwork, Fl
         super.adoptTransmittersAndAcceptorsFrom(net);
     }
 
+    @Override
     @Nullable
     public FluidStack getBuffer() {
         return buffer;
@@ -120,7 +121,7 @@ public class FluidNetwork extends DynamicNetwork<IFluidHandler, FluidNetwork, Fl
             sum += pipe.getCapacity();
         }
 
-        meanCapacity = sum / (double) numCables;
+        meanCapacity = sum / numCables;
     }
 
     public int getFluidNeeded() {
@@ -304,7 +305,7 @@ public class FluidNetwork extends DynamicNetwork<IFluidHandler, FluidNetwork, Fl
 
     @Override
     public String getNeededInfo() {
-        return (float) getFluidNeeded() / 1000F + " buckets";
+        return getFluidNeeded() / 1000F + " buckets";
     }
 
     @Override

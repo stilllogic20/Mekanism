@@ -62,7 +62,7 @@ public class RenderEnergyCubeItem extends MekanismItemStackRenderer {
 
             GlStateManager.pushMatrix();
             GlStateManager.scale(0.4F, 0.4F, 0.4F);
-            GL11.glColor4f((float) c[0] / 255F, (float) c[1] / 255F, (float) c[2] / 255F,
+            GL11.glColor4f(c[0] / 255F, c[1] / 255F, c[2] / 255F,
                   (float) (energy / tier.getMaxEnergy()));
             GlStateManager.translate(0, (float) Math.sin(Math.toRadians(MekanismClient.ticksPassed * 3)) / 7, 0);
             GlStateManager.rotate(MekanismClient.ticksPassed * 4, 0, 1, 0);

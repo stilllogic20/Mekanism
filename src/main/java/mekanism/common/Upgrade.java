@@ -141,7 +141,7 @@ public enum Upgrade {
         List<String> ret = new ArrayList<>();
 
         if (canMultiply()) {
-            double effect = Math.pow(2, (float) tile.getComponent().getUpgrades(this));
+            double effect = Math.pow(2, tile.getComponent().getUpgrades(this));
 
             ret.add(LangUtils.localize("gui.upgrades.effect") + ": " + effect + "x");
         }

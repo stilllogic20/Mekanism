@@ -26,7 +26,7 @@ public class ChemicalDissolutionChamberRecipeCategory extends BaseRecipeCategory
     @Override
     public void drawExtras(Minecraft minecraft) {
         super.drawExtras(minecraft);
-        drawTexturedRect(64 - xOffset, 40 - yOffset, 176, 63, (int) (48 * ((float) timer.getValue() / 20F)), 8);
+        drawTexturedRect(64 - xOffset, 40 - yOffset, 176, 63, (int) (48 * (timer.getValue() / 20F)), 8);
     }
 
     @Override

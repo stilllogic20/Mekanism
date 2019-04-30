@@ -180,7 +180,7 @@ public class GuiUpgradeManagement extends GuiMekanism {
         if (getCurrentUpgrades().size() <= 4) {
             return 0;
         }
-        return (int) ((getCurrentUpgrades().size() * scroll) - ((4F / (float) getCurrentUpgrades().size())) * scroll);
+        return (int) ((getCurrentUpgrades().size() * scroll) - ((4F / getCurrentUpgrades().size())) * scroll);
     }
 
     @Override
@@ -188,7 +188,7 @@ public class GuiUpgradeManagement extends GuiMekanism {
         super.mouseClickMove(mouseX, mouseY, button, ticks);
         if (isDragging) {
             int yAxis = (mouseY - (height - ySize) / 2);
-            scroll = Math.min(Math.max((float) (yAxis - 8 - dragOffset) / 42F, 0), 1);
+            scroll = Math.min(Math.max((yAxis - 8 - dragOffset) / 42F, 0), 1);
         }
     }
 

@@ -48,7 +48,7 @@ public class PRCRecipeCategory extends BaseRecipeCategory {
         guiElements.add(new GuiProgress(new IProgressInfoHandler() {
             @Override
             public double getProgress() {
-                return (float) timer.getValue() / 20F;
+                return timer.getValue() / 20F;
             }
         }, progressBar, this, guiLocation, 75, 37));
     }

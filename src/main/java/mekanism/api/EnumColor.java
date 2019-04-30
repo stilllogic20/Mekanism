@@ -127,7 +127,7 @@ public enum EnumColor implements IStringSerializable {
      * @return the color value
      */
     public float getColor(int index) {
-        return (float) rgbCode[index] / 255F;
+        return rgbCode[index] / 255F;
     }
 
     /**

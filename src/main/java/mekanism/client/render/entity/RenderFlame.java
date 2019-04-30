@@ -28,7 +28,7 @@ public class RenderFlame extends Render<EntityFlame> {
             return;
         }
 
-        float alpha = (entity.ticksExisted + partialTick) / (float) EntityFlame.LIFESPAN;
+        float alpha = (entity.ticksExisted + partialTick) / EntityFlame.LIFESPAN;
         float size = (float) Math.pow(2 * alpha, 2);
 
         GlStateManager.pushMatrix();
@@ -52,8 +52,8 @@ public class RenderFlame extends Render<EntityFlame> {
         int i = 0;
         float f2 = 0.0F;
         float f3 = 0.5F;
-        float f4 = (float) (i * 10) / 32F;
-        float f5 = (float) (5 + i * 10) / 32F;
+        float f4 = i * 10 / 32F;
+        float f5 = (5 + i * 10) / 32F;
         float scale = 0.05625F * (0.8F + size);
 
         GL11.glEnable(GL12.GL_RESCALE_NORMAL);
@@ -66,10 +66,10 @@ public class RenderFlame extends Render<EntityFlame> {
             GL11.glNormal3f(0.0F, 0.0F, scale);
 
             worldrenderer.begin(7, DefaultVertexFormats.POSITION_TEX);
-            worldrenderer.pos(-8.0D, -2.0D, 0.0D).tex((double) f2, (double) f4).endVertex();
-            worldrenderer.pos(8.0D, -2.0D, 0.0D).tex((double) f3, (double) f4).endVertex();
-            worldrenderer.pos(8.0D, 2.0D, 0.0D).tex((double) f3, (double) f5).endVertex();
-            worldrenderer.pos(-8.0D, 2.0D, 0.0D).tex((double) f2, (double) f5).endVertex();
+            worldrenderer.pos(-8.0D, -2.0D, 0.0D).tex(f2, f4).endVertex();
+            worldrenderer.pos(8.0D, -2.0D, 0.0D).tex(f3, f4).endVertex();
+            worldrenderer.pos(8.0D, 2.0D, 0.0D).tex(f3, f5).endVertex();
+            worldrenderer.pos(-8.0D, 2.0D, 0.0D).tex(f2, f5).endVertex();
             tessellator.draw();
         }
 

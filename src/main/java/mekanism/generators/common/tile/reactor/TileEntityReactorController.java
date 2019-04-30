@@ -63,6 +63,7 @@ public class TileEntityReactorController extends TileEntityReactorBlock implemen
         inventory = NonNullList.withSize(1, ItemStack.EMPTY);
     }
 
+    @Override
     public boolean isFrame() {
         return false;
     }

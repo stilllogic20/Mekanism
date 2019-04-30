@@ -49,7 +49,7 @@ public class GuiThermoelectricBoiler extends GuiEmbeddedGaugeTile<TileEntityBoil
             public double getLevel() {
                 double cap = (tileEntity.structure.superheatingElements * MekanismConfig
                       .current().general.superheatingHeatTransfer.val()) / SynchronizedBoilerData.getHeatEnthalpy();
-                return (double) tileEntity.structure.lastMaxBoil / cap;
+                return tileEntity.structure.lastMaxBoil / cap;
             }
         }, resource, 144, 13));
         addGuiElement(new GuiHeatInfo(() -> {

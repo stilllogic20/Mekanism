@@ -83,7 +83,7 @@ public final class TransporterUtils {
     public static float[] getStackPosition(ILogisticalTransporter tileEntity, TransporterStack stack, float partial) {
         Coord4D offset = new Coord4D(0, 0, 0, tileEntity.world().provider.getDimension())
               .offset(stack.getSide(tileEntity));
-        float progress = (((float) stack.progress + partial) / 100F) - 0.5F;
+        float progress = ((stack.progress + partial) / 100F) - 0.5F;
 
         return new float[]{0.5F + offset.x * progress, 0.25F + offset.y * progress, 0.5F + offset.z * progress};
     }

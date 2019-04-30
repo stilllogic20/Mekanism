@@ -540,7 +540,7 @@ public class ClientProxy extends CommonProxy {
                 break;
             }
 
-            ModelLoader.registerItemVariants(Item.getItemFromBlock(type.typeBlock.getBlock()),
+            ModelBakery.registerItemVariants(Item.getItemFromBlock(type.typeBlock.getBlock()),
                   modelsToAdd.toArray(new ModelResourceLocation[]{}));
         }
 
@@ -590,7 +590,7 @@ public class ClientProxy extends CommonProxy {
                 break;
             }
 
-            ModelLoader.registerItemVariants(Item.getItemFromBlock(type.blockType.getBlock()),
+            ModelBakery.registerItemVariants(Item.getItemFromBlock(type.blockType.getBlock()),
                   modelsToAdd.toArray(new ModelResourceLocation[]{}));
         }
 
@@ -628,7 +628,7 @@ public class ClientProxy extends CommonProxy {
                 break;
             }
 
-            ModelLoader.registerItemVariants(Item.getItemFromBlock(MekanismBlocks.Transmitter),
+            ModelBakery.registerItemVariants(Item.getItemFromBlock(MekanismBlocks.Transmitter),
                   modelsToAdd.toArray(new ModelResourceLocation[]{}));
         }
 
@@ -982,6 +982,7 @@ public class ClientProxy extends CommonProxy {
     }
 
 
+    @Override
     public void doMultiblockSparkle(TileEntity tileEntity, BlockPos corner1, BlockPos corner2, INodeChecker checker) {
         doSparkle(tileEntity, new SparkleAnimation(tileEntity, corner1, corner2, checker));
     }

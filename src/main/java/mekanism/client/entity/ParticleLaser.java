@@ -45,9 +45,9 @@ public class ParticleLaser extends Particle {
         GL11.glDisable(GL11.GL_CULL_FACE);
         MekanismRenderer.glowOn();
 
-        float newX = (float) (prevPosX + (posX - prevPosX) * (double) partialTicks - interpPosX);
-        float newY = (float) (prevPosY + (posY - prevPosY) * (double) partialTicks - interpPosY);
-        float newZ = (float) (prevPosZ + (posZ - prevPosZ) * (double) partialTicks - interpPosZ);
+        float newX = (float) (prevPosX + (posX - prevPosX) * partialTicks - interpPosX);
+        float newY = (float) (prevPosY + (posY - prevPosY) * partialTicks - interpPosY);
+        float newZ = (float) (prevPosZ + (posZ - prevPosZ) * partialTicks - interpPosZ);
 
         GlStateManager.translate(newX, newY, newZ);
 

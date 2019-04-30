@@ -44,9 +44,9 @@ public class RenderTurbineRotor extends TileEntitySpecialRenderer<TileEntityTurb
 
         if (!Mekanism.proxy.isPaused()) {
             tileEntity.rotationLower =
-                  (tileEntity.rotationLower + rotateSpeed * BASE_SPEED * (1F / (float) (baseIndex + 1))) % 360;
+                  (tileEntity.rotationLower + rotateSpeed * BASE_SPEED * (1F / (baseIndex + 1))) % 360;
             tileEntity.rotationUpper =
-                  (tileEntity.rotationUpper + rotateSpeed * BASE_SPEED * (1F / (float) (baseIndex + 2))) % 360;
+                  (tileEntity.rotationUpper + rotateSpeed * BASE_SPEED * (1F / (baseIndex + 2))) % 360;
         }
 
         if (tileEntity.getHousedBlades() > 0) {

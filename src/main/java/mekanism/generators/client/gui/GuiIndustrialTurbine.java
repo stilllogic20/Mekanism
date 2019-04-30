@@ -54,7 +54,7 @@ public class GuiIndustrialTurbine extends GuiEmbeddedGaugeTile<TileEntityTurbine
                     return 0;
                 }
 
-                return (double) tileEntity.structure.lastSteamInput / rate;
+                return tileEntity.structure.lastSteamInput / rate;
             }
         }, resource, 40, 13));
         addGuiElement(new GuiEnergyInfo(() -> {

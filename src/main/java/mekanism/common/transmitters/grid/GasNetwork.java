@@ -92,6 +92,7 @@ public class GasNetwork extends DynamicNetwork<IGasHandler, GasNetwork, GasStack
         super.adoptTransmittersAndAcceptorsFrom(net);
     }
 
+    @Override
     @Nullable
     public GasStack getBuffer() {
         return buffer;

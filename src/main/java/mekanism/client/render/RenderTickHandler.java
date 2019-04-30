@@ -87,7 +87,7 @@ public class RenderTickHandler {
                     int x = scaledresolution.getScaledWidth();
                     int y = scaledresolution.getScaledHeight();
                     int stringWidth = font.getStringWidth(mode.getName());
-                    int color = new ColourRGBA(1, 1, 1, (float) modeSwitchTimer / 100F).argb();
+                    int color = new ColourRGBA(1, 1, 1, modeSwitchTimer / 100F).argb();
                     font.drawString(mode.getColor() + mode.getName(), x / 2 - stringWidth / 2, y - 60, color);
                 }
 

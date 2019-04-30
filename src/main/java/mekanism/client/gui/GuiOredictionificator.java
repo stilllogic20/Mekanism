@@ -68,7 +68,7 @@ public class GuiOredictionificator extends GuiMekanismTile<TileEntityOredictioni
         if (tileEntity.filters.size() <= 3) {
             return 0;
         }
-        return (int) ((tileEntity.filters.size() * scroll) - ((3F / (float) tileEntity.filters.size())) * scroll);
+        return (int) ((tileEntity.filters.size() * scroll) - ((3F / tileEntity.filters.size())) * scroll);
     }
 
     @Override
@@ -178,7 +178,7 @@ public class GuiOredictionificator extends GuiMekanismTile<TileEntityOredictioni
         super.mouseClickMove(mouseX, mouseY, button, ticks);
         if (isDragging) {
             int yAxis = (mouseY - (height - ySize) / 2);
-            scroll = Math.min(Math.max((float) (yAxis - 18 - dragOffset) / 73F, 0), 1);
+            scroll = Math.min(Math.max((yAxis - 18 - dragOffset) / 73F, 0), 1);
         }
     }
 

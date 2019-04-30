@@ -124,7 +124,7 @@ public class TileEntityThermalEvaporationController extends TileEntityThermalEva
                 inputToUse = Math.min(inputTank.getFluidAmount(), inputToUse);
                 inputToUse = Math.min(inputToUse, outputNeeded / outputRatio);
 
-                lastGain = (float) inputToUse / (float) recipe.recipeInput.ingredient.amount;
+                lastGain = (float) inputToUse / recipe.recipeInput.ingredient.amount;
                 partialInput += inputToUse;
 
                 if (partialInput >= 1) {
@@ -241,7 +241,7 @@ public class TileEntityThermalEvaporationController extends TileEntityThermalEva
         }
 
         heatToAbsorb += getActiveSolars() * MekanismConfig.current().general.evaporationSolarMultiplier.val();
-        temperature += heatToAbsorb / (float) height;
+        temperature += heatToAbsorb / height;
 
         float biome = biomeTemp - 0.5F;
         float base = biome > 0 ? biome * 20 : biomeTemp * 40;
@@ -259,7 +259,7 @@ public class TileEntityThermalEvaporationController extends TileEntityThermalEva
 
         float prev = temperature;
         temperature = (float) Math
-              .min(MekanismConfig.current().general.evaporationMaxTemp.val(), temperature + incr / (float) height);
+              .min(MekanismConfig.current().general.evaporationMaxTemp.val(), temperature + incr / height);
 
         if (incr < 0) {
             totalLoss = prev - temperature;

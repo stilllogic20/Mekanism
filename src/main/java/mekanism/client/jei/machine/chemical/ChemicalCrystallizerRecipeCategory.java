@@ -23,7 +23,7 @@ public class ChemicalCrystallizerRecipeCategory extends BaseRecipeCategory {
     @Override
     public void drawExtras(Minecraft minecraft) {
         super.drawExtras(minecraft);
-        drawTexturedRect(53 - xOffset, 61 - yOffset, 176, 63, (int) (48 * ((float) timer.getValue() / 20F)), 8);
+        drawTexturedRect(53 - xOffset, 61 - yOffset, 176, 63, (int) (48 * (timer.getValue() / 20F)), 8);
     }
 
     @Override

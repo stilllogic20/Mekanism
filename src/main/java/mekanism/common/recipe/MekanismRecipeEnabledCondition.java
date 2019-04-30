@@ -31,12 +31,7 @@ public class MekanismRecipeEnabledCondition implements IConditionFactory {
             final BlockStateGenerator.GeneratorType type = MekanismConfig.current().generators.generatorsManager
                   .typeFromName(generatorType);
             //noinspection Convert2Lambda - classloading issues if generators not installed
-            return new BooleanSupplier() {
-                @Override
-                public boolean getAsBoolean() {
-                    return MekanismConfig.current().generators.generatorsManager.isEnabled(type);
-                }
-            };
+            return () -> MekanismConfig.current().generators.generatorsManager.isEnabled(type);
         }
 
         if (JsonUtils.hasField(json, "circuitOredict")) {

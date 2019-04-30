@@ -388,7 +388,7 @@ public final class MekanismUtils {
         Map<Upgrade, Integer> upgrades = Upgrade.buildMap(ItemDataUtils.getDataMap(itemStack));
         float numUpgrades = upgrades.get(Upgrade.ENERGY) == null ? 0 : (float) upgrades.get(Upgrade.ENERGY);
         return def * Math.pow(MekanismConfig.current().general.maxUpgradeMultiplier.val(),
-              numUpgrades / (float) Upgrade.ENERGY.getMax());
+              numUpgrades / Upgrade.ENERGY.getMax());
     }
 
     /**

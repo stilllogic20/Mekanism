@@ -48,35 +48,35 @@ public class MekanismParticleHelper {
             int blockY = pos.getY();
             int blockZ = pos.getZ();
             AxisAlignedBB axisalignedbb = iblockstate.getBoundingBox(world, pos);
-            double particleX = (double) blockX + world.rand.nextDouble() * (axisalignedbb.maxX - axisalignedbb.minX
+            double particleX = blockX + world.rand.nextDouble() * (axisalignedbb.maxX - axisalignedbb.minX
                   - OFFSET_1) + OFFSET_2 + axisalignedbb.minX;
-            double particleY = (double) blockY + world.rand.nextDouble() * (axisalignedbb.maxY - axisalignedbb.minY
+            double particleY = blockY + world.rand.nextDouble() * (axisalignedbb.maxY - axisalignedbb.minY
                   - OFFSET_1) + OFFSET_2 + axisalignedbb.minY;
-            double particleZ = (double) blockZ + world.rand.nextDouble() * (axisalignedbb.maxZ - axisalignedbb.minZ
+            double particleZ = blockZ + world.rand.nextDouble() * (axisalignedbb.maxZ - axisalignedbb.minZ
                   - OFFSET_1) + OFFSET_2 + axisalignedbb.minZ;
 
             if (side == EnumFacing.DOWN) {
-                particleY = (double) blockY + axisalignedbb.minY - OFFSET_2;
+                particleY = blockY + axisalignedbb.minY - OFFSET_2;
             }
 
             if (side == EnumFacing.UP) {
-                particleY = (double) blockY + axisalignedbb.maxY + OFFSET_2;
+                particleY = blockY + axisalignedbb.maxY + OFFSET_2;
             }
 
             if (side == EnumFacing.NORTH) {
-                particleZ = (double) blockZ + axisalignedbb.minZ - OFFSET_2;
+                particleZ = blockZ + axisalignedbb.minZ - OFFSET_2;
             }
 
             if (side == EnumFacing.SOUTH) {
-                particleZ = (double) blockZ + axisalignedbb.maxZ + OFFSET_2;
+                particleZ = blockZ + axisalignedbb.maxZ + OFFSET_2;
             }
 
             if (side == EnumFacing.WEST) {
-                particleX = (double) blockX + axisalignedbb.minX - OFFSET_2;
+                particleX = blockX + axisalignedbb.minX - OFFSET_2;
             }
 
             if (side == EnumFacing.EAST) {
-                particleX = (double) blockX + axisalignedbb.maxX + OFFSET_2;
+                particleX = blockX + axisalignedbb.maxX + OFFSET_2;
             }
 
             manager.addEffect(new TieredParticleDigging(world, particleX, particleY, particleZ, 0, 0, 0, iblockstate, color)

@@ -60,6 +60,7 @@ public class EnergyNetwork extends DynamicNetwork<EnergyAcceptorWrapper, EnergyN
         return Math.round(d * 10000) / 10000;
     }
 
+    @Override
     @Nullable
     public EnergyStack getBuffer() {
         return buffer;
@@ -89,10 +90,10 @@ public class EnergyNetwork extends DynamicNetwork<EnergyAcceptorWrapper, EnergyN
         double reciprocalSum = 0;
 
         for (IGridTransmitter<EnergyAcceptorWrapper, EnergyNetwork, EnergyStack> cable : transmitters) {
-            reciprocalSum += 1.0 / (double) cable.getCapacity();
+            reciprocalSum += 1.0 / cable.getCapacity();
         }
 
-        meanCapacity = (double) numCables / reciprocalSum;
+        meanCapacity = numCables / reciprocalSum;
     }
 
     public double getEnergyNeeded() {

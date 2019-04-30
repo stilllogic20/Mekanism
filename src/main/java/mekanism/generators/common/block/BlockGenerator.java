@@ -154,7 +154,7 @@ public abstract class BlockGenerator extends BlockContainer {
           ItemStack itemstack) {
         TileEntityBasicBlock tileEntity = (TileEntityBasicBlock) world.getTileEntity(pos);
 
-        int side = MathHelper.floor((double) (entityliving.rotationYaw * 4.0F / 360.0F) + 0.5D) & 3;
+        int side = MathHelper.floor(entityliving.rotationYaw * 4.0F / 360.0F + 0.5D) & 3;
         int height = Math.round(entityliving.rotationPitch);
         int change = 3;
 
@@ -242,19 +242,19 @@ public abstract class BlockGenerator extends BlockContainer {
         TileEntityBasicBlock tileEntity = (TileEntityBasicBlock) world.getTileEntity(pos);
 
         if (MekanismUtils.isActive(world, pos)) {
-            float xRandom = (float) pos.getX() + 0.5F;
-            float yRandom = (float) pos.getY() + 0.0F + random.nextFloat() * 6.0F / 16.0F;
-            float zRandom = (float) pos.getZ() + 0.5F;
+            float xRandom = pos.getX() + 0.5F;
+            float yRandom = pos.getY() + 0.0F + random.nextFloat() * 6.0F / 16.0F;
+            float zRandom = pos.getZ() + 0.5F;
             float iRandom = 0.52F;
             float jRandom = random.nextFloat() * 0.6F - 0.3F;
 
             if (tileEntity.facing == EnumFacing.WEST) {
                 switch (type) {
                     case HEAT_GENERATOR:
-                        world.spawnParticle(EnumParticleTypes.SMOKE_NORMAL, (double) (xRandom + iRandom),
-                              (double) yRandom, (double) (zRandom - jRandom), 0.0D, 0.0D, 0.0D);
-                        world.spawnParticle(EnumParticleTypes.FLAME, (double) (xRandom + iRandom), (double) yRandom,
-                              (double) (zRandom - jRandom), 0.0D, 0.0D, 0.0D);
+                        world.spawnParticle(EnumParticleTypes.SMOKE_NORMAL, xRandom + iRandom,
+                              yRandom, zRandom - jRandom, 0.0D, 0.0D, 0.0D);
+                        world.spawnParticle(EnumParticleTypes.FLAME, xRandom + iRandom, yRandom,
+                              zRandom - jRandom, 0.0D, 0.0D, 0.0D);
                         break;
                     case BIO_GENERATOR:
                         world.spawnParticle(EnumParticleTypes.SMOKE_NORMAL, pos.getX() + .25, pos.getY() + .2,
@@ -266,10 +266,10 @@ public abstract class BlockGenerator extends BlockContainer {
             } else if (tileEntity.facing == EnumFacing.EAST) {
                 switch (type) {
                     case HEAT_GENERATOR:
-                        world.spawnParticle(EnumParticleTypes.SMOKE_NORMAL, (double) (xRandom + iRandom),
-                              (double) yRandom + 0.5F, (double) (zRandom - jRandom), 0.0D, 0.0D, 0.0D);
-                        world.spawnParticle(EnumParticleTypes.FLAME, (double) (xRandom + iRandom),
-                              (double) yRandom + 0.5F, (double) (zRandom - jRandom), 0.0D, 0.0D, 0.0D);
+                        world.spawnParticle(EnumParticleTypes.SMOKE_NORMAL, xRandom + iRandom,
+                              (double) yRandom + 0.5F, zRandom - jRandom, 0.0D, 0.0D, 0.0D);
+                        world.spawnParticle(EnumParticleTypes.FLAME, xRandom + iRandom,
+                              (double) yRandom + 0.5F, zRandom - jRandom, 0.0D, 0.0D, 0.0D);
                         break;
                     case BIO_GENERATOR:
                         world.spawnParticle(EnumParticleTypes.SMOKE_NORMAL, pos.getX() + .75, pos.getY() + .2,
@@ -281,10 +281,10 @@ public abstract class BlockGenerator extends BlockContainer {
             } else if (tileEntity.facing == EnumFacing.NORTH) {
                 switch (type) {
                     case HEAT_GENERATOR:
-                        world.spawnParticle(EnumParticleTypes.SMOKE_NORMAL, (double) (xRandom - jRandom),
-                              (double) yRandom + 0.5F, (double) (zRandom - iRandom), 0.0D, 0.0D, 0.0D);
-                        world.spawnParticle(EnumParticleTypes.FLAME, (double) (xRandom - jRandom),
-                              (double) yRandom + 0.5F, (double) (zRandom - iRandom), 0.0D, 0.0D, 0.0D);
+                        world.spawnParticle(EnumParticleTypes.SMOKE_NORMAL, xRandom - jRandom,
+                              (double) yRandom + 0.5F, zRandom - iRandom, 0.0D, 0.0D, 0.0D);
+                        world.spawnParticle(EnumParticleTypes.FLAME, xRandom - jRandom,
+                              (double) yRandom + 0.5F, zRandom - iRandom, 0.0D, 0.0D, 0.0D);
                         break;
                     case BIO_GENERATOR:
                         world.spawnParticle(EnumParticleTypes.SMOKE_NORMAL, pos.getX() + .5, pos.getY() + .2,
@@ -296,10 +296,10 @@ public abstract class BlockGenerator extends BlockContainer {
             } else if (tileEntity.facing == EnumFacing.SOUTH) {
                 switch (type) {
                     case HEAT_GENERATOR:
-                        world.spawnParticle(EnumParticleTypes.SMOKE_NORMAL, (double) (xRandom - jRandom),
-                              (double) yRandom + 0.5F, (double) (zRandom + iRandom), 0.0D, 0.0D, 0.0D);
-                        world.spawnParticle(EnumParticleTypes.FLAME, (double) (xRandom - jRandom),
-                              (double) yRandom + 0.5F, (double) (zRandom + iRandom), 0.0D, 0.0D, 0.0D);
+                        world.spawnParticle(EnumParticleTypes.SMOKE_NORMAL, xRandom - jRandom,
+                              (double) yRandom + 0.5F, zRandom + iRandom, 0.0D, 0.0D, 0.0D);
+                        world.spawnParticle(EnumParticleTypes.FLAME, xRandom - jRandom,
+                              (double) yRandom + 0.5F, zRandom + iRandom, 0.0D, 0.0D, 0.0D);
                         break;
                     case BIO_GENERATOR:
                         world.spawnParticle(EnumParticleTypes.SMOKE_NORMAL, pos.getX() + .5, pos.getY() + .2,

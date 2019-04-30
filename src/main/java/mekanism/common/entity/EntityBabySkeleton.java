@@ -50,7 +50,7 @@ public class EntityBabySkeleton extends EntitySkeleton {
     @Override
     protected int getExperiencePoints(EntityPlayer p_70693_1_) {
         if (isChild()) {
-            experienceValue = (int) ((float) experienceValue * 2.5F);
+            experienceValue = (int) (experienceValue * 2.5F);
         }
 
         return super.getExperiencePoints(p_70693_1_);
@@ -65,6 +65,7 @@ public class EntityBabySkeleton extends EntitySkeleton {
     }
 
     //copied from base entity, as abstractskeleton overrides it
+    @Override
     public float getEyeHeight() {
         return this.height * 0.85F;
     }

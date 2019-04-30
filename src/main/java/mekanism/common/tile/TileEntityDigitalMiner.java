@@ -326,10 +326,10 @@ public class TileEntityDigitalMiner extends TileEntityElectricBlock implements I
         }
 
         int baseRad = Math.max(radius - 10, 0);
-        ret *= (1 + ((float) baseRad / 22F));
+        ret *= (1 + (baseRad / 22F));
 
         int baseHeight = Math.max((maxY - minY) - 60, 0);
-        ret *= (1 + ((float) baseHeight / 195F));
+        ret *= (1 + (baseHeight / 195F));
 
         return ret;
     }
@@ -1184,6 +1184,7 @@ public class TileEntityDigitalMiner extends TileEntityElectricBlock implements I
         return getBlockType().getTranslationKey() + "." + fullName + ".name";
     }
 
+    @Override
     public void writeSustainedData(ItemStack itemStack) {
         ItemDataUtils.setBoolean(itemStack, "hasMinerConfig", true);
 

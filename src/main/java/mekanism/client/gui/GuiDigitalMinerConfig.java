@@ -274,7 +274,7 @@ public class GuiDigitalMinerConfig extends GuiMekanismTile<TileEntityDigitalMine
         super.mouseClickMove(mouseX, mouseY, button, ticks);
         if (isDragging) {
             int yAxis = (mouseY - (height - ySize) / 2);
-            scroll = Math.min(Math.max((float) (yAxis - 18 - dragOffset) / 123F, 0), 1);
+            scroll = Math.min(Math.max((yAxis - 18 - dragOffset) / 123F, 0), 1);
         }
     }
 

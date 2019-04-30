@@ -43,6 +43,7 @@ public class TItemStackFilter extends TransporterFilter implements IItemStackFil
         }
     }
 
+    @Override
     public Finder getFinder() {
         return new ItemStackFinder(itemType);
     }
