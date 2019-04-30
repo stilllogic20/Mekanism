@@ -307,10 +307,10 @@ public class MekanismRenderer {
     }
 
     public static void colorGLSM(int color) {
-        float red = (color >> 16 & 0xFF) / 255.0F;
-        float green = (color >> 8 & 0xFF) / 255.0F;
+        float red = (color >>> 16 & 0xFF) / 255.0F;
+        float green = (color >>> 8 & 0xFF) / 255.0F;
         float blue = (color & 0xFF) / 255.0F;
-        float alpha = (color >> 24 & 0xFF) / 255f;
+        float alpha = (color >>> 24 & 0xFF) / 255f;
         GlStateManager.color(red, green, blue, alpha);
     }
 
@@ -319,8 +319,8 @@ public class MekanismRenderer {
     }
 
     public static void color(int color) {
-        float cR = (color >> 16 & 0xFF) / 255.0F;
-        float cG = (color >> 8 & 0xFF) / 255.0F;
+        float cR = (color >>> 16 & 0xFF) / 255.0F;
+        float cG = (color >>> 8 & 0xFF) / 255.0F;
         float cB = (color & 0xFF) / 255.0F;
 
         GL11.glColor3f(cR, cG, cB);
