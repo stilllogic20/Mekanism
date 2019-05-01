@@ -2,6 +2,8 @@ package mekanism.common.tile;
 
 import io.netty.buffer.ByteBuf;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -512,12 +514,14 @@ public class TileEntityTeleporter extends TileEntityElectricBlock implements ICo
             for (int i = 0; i < amount; i++) {
                 publicCache.add(new Frequency(dataStream));
             }
+            Collections.sort(publicCache, Comparator.comparing(f -> f.name));
 
             amount = dataStream.readInt();
 
             for (int i = 0; i < amount; i++) {
                 privateCache.add(new Frequency(dataStream));
             }
+            Collections.sort(privateCache, Comparator.comparing(f -> f.name));
         }
     }
 

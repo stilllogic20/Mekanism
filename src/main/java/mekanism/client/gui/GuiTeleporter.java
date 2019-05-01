@@ -2,8 +2,14 @@ package mekanism.client.gui;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.UUID;
+
+import org.lwjgl.input.Keyboard;
+import org.lwjgl.opengl.GL11;
+
 import mekanism.api.Coord4D;
 import mekanism.api.EnumColor;
 import mekanism.api.TileNetworkList;
@@ -43,8 +49,6 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import org.lwjgl.input.Keyboard;
-import org.lwjgl.opengl.GL11;
 
 @SideOnly(Side.CLIENT)
 public class GuiTeleporter extends GuiMekanismTile<TileEntityTeleporter> {
@@ -164,10 +168,12 @@ public class GuiTeleporter extends GuiMekanismTile<TileEntityTeleporter> {
 
     public void setPublicCache(List<Frequency> cache) {
         clientPublicCache = cache;
+        Collections.sort(clientPublicCache, Comparator.comparing(f -> f.name));
     }
 
     public void setPrivateCache(List<Frequency> cache) {
         clientPrivateCache = cache;
+        Collections.sort(clientPrivateCache, Comparator.comparing(f -> f.name));
     }
 
     public void setStatus(byte status) {
