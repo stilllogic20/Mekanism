@@ -63,7 +63,6 @@ public class TileEntityTurbineValve extends TileEntityTurbineCasing implements I
 
         if (!world.isRemote) {
             if (structure != null) {
-                double prev = getEnergy();
                 CableUtils.emit(this);
             }
         }
@@ -424,6 +423,7 @@ public class TileEntityTurbineValve extends TileEntityTurbineCasing implements I
     }
 
     @Override
+    @SuppressWarnings("unchecked")
     public <T> T getCapability(@Nonnull Capability<T> capability, EnumFacing side) {
         if ((!world.isRemote && structure != null) || (world.isRemote && clientHasStructure)) {
             if (capability == Capabilities.ENERGY_STORAGE_CAPABILITY
