@@ -199,6 +199,12 @@ public class Mekanism {
     public static final String LOG_TAG = '[' + MOD_NAME + ']';
     public static final PlayerState playerState = new PlayerState();
     public static final Set<UUID> freeRunnerOn = new HashSet<>();
+    static {
+        MODID.intern();
+        MOD_NAME.intern();
+        LOG_TAG.intern();
+    }
+    
     /**
      * Mekanism Packet Pipeline
      */
