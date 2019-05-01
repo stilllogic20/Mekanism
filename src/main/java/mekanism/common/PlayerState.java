@@ -56,7 +56,8 @@ public class PlayerState {
 
         // If something changed and we're in a remote world, take appropriate action
         if (changed && world.isRemote) {
-            // If the player is the "local" player, we need to tell the server the state has changed
+            // If the player is the "local" player, we need to tell the server the state has
+            // changed
             if (isLocal) {
                 Mekanism.packetHandler.sendToServer(PacketJetpackData.JetpackDataMessage.UPDATE(uuid, isActive));
             }
@@ -69,7 +70,11 @@ public class PlayerState {
     }
 
     public boolean isJetpackOn(EntityPlayer p) {
-        return activeJetpacks.contains(p.getName());
+        if (p == null)
+            return false;
+        if (p.getGameProfile() == null)
+            return false;
+        return activeJetpacks.contains(p.getGameProfile().getId());
     }
 
     public Set<UUID> getActiveJetpacks() {
@@ -100,10 +105,11 @@ public class PlayerState {
 
         // If something changed and we're in a remote world, take appropriate action
         if (changed && world.isRemote) {
-            // If the player is the "local" player, we need to tell the server the state has changed
+            // If the player is the "local" player, we need to tell the server the state has
+            // changed
             if (isLocal) {
                 Mekanism.packetHandler
-                      .sendToServer(PacketScubaTankData.ScubaTankDataMessage.UPDATE(uuid, isActive));
+                        .sendToServer(PacketScubaTankData.ScubaTankDataMessage.UPDATE(uuid, isActive));
             }
 
             // Start a sound playing if the person is now using a gasmask
@@ -145,10 +151,11 @@ public class PlayerState {
 
         // If something changed and we're in a remote world, take appropriate action
         if (changed && world.isRemote) {
-            // If the player is the "local" player, we need to tell the server the state has changed
+            // If the player is the "local" player, we need to tell the server the state has
+            // changed
             if (isLocal) {
                 Mekanism.packetHandler.sendToServer(new FlamethrowerDataMessage(FlamethrowerPacket.UPDATE, null,
-                      uuid, isActive));
+                        uuid, isActive));
             }
 
             // Start a sound playing if the person is now using a flamethrower
