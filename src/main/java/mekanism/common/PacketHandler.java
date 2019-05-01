@@ -1,10 +1,12 @@
 package mekanism.common;
 
-import io.netty.buffer.ByteBuf;
-import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.UUID;
+
 import javax.annotation.Nonnull;
+
+import io.netty.buffer.ByteBuf;
 import mekanism.api.Range4D;
 import mekanism.common.config.MekanismConfig;
 import mekanism.common.network.PacketBoxBlacklist;
@@ -70,7 +72,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.EnumFacing;
-import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.Vec3d;
 import net.minecraftforge.fml.common.FMLCommonHandler;
@@ -129,10 +130,8 @@ public class PacketHandler {
                     for (byte b : (byte[]) data) {
                         output.writeByte(b);
                     }
-                } else if (data instanceof ArrayList) {
-                    encode(((ArrayList<?>) data).toArray(), output);
-                } else if (data instanceof NonNullList) {
-                    encode(((NonNullList) data).toArray(), output);
+                } else if (data instanceof Collection<?>) {
+                    encode(((Collection<?>) data).toArray(), output);
                 } else {
                     throw new RuntimeException(
                           "Un-encodable data passed to encode(): " + data + ", full data: " + Arrays
