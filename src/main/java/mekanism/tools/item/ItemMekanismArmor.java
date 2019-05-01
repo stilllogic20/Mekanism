@@ -61,7 +61,7 @@ public class ItemMekanismArmor extends ItemArmor {
             return new ItemStack(MekanismItems.Ingot, 1, 4);
         }
 
-        return new ItemStack(getArmorMaterial().getRepairItem());
+        return getArmorMaterial().getRepairItemStack();
     }
 
     @Override
