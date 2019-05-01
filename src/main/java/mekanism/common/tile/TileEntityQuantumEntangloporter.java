@@ -313,22 +313,22 @@ public class TileEntityQuantumEntangloporter extends TileEntityElectricBlock imp
                 frequency = null;
             }
 
-            publicCache.clear();
-            privateCache.clear();
 
             int amount = dataStream.readInt();
+            publicCache = new ArrayList<>(amount);
 
             for (int i = 0; i < amount; i++) {
                 publicCache.add(new InventoryFrequency(dataStream));
             }
-            Collections.sort(publicCache, Comparator.comparing(f -> f.name));
+            Collections.sort(publicCache, Comparator.comparing(f -> f.name.toLowerCase()));
 
             amount = dataStream.readInt();
+            privateCache = new ArrayList<>(amount);
 
             for (int i = 0; i < amount; i++) {
                 privateCache.add(new InventoryFrequency(dataStream));
             }
-            Collections.sort(privateCache, Comparator.comparing(f -> f.name));
+            Collections.sort(privateCache, Comparator.comparing(f -> f.name.toLowerCase()));
         }
     }
 

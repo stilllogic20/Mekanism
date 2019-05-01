@@ -168,12 +168,12 @@ public class GuiTeleporter extends GuiMekanismTile<TileEntityTeleporter> {
 
     public void setPublicCache(List<Frequency> cache) {
         clientPublicCache = cache;
-        Collections.sort(clientPublicCache, Comparator.comparing(f -> f.name));
+        Collections.sort(clientPublicCache, Comparator.comparing(f -> f.name.toLowerCase()));
     }
 
     public void setPrivateCache(List<Frequency> cache) {
         clientPrivateCache = cache;
-        Collections.sort(clientPrivateCache, Comparator.comparing(f -> f.name));
+        Collections.sort(clientPrivateCache, Comparator.comparing(f -> f.name.toLowerCase()));
     }
 
     public void setStatus(byte status) {
