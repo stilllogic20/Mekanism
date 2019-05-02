@@ -364,8 +364,6 @@ public class Mekanism {
 
         //Enrichment Chamber Recipes
         if (MekanismConfig.current().general.machinesManager.isEnabled(MachineType.ENRICHMENT_CHAMBER)) {
-            RecipeHandler
-                  .addEnrichmentChamberRecipe(new ItemStack(Blocks.REDSTONE_ORE), new ItemStack(Items.REDSTONE, 12));
             RecipeHandler.addEnrichmentChamberRecipe(new ItemStack(Blocks.OBSIDIAN),
                   new ItemStack(MekanismItems.OtherDust, 4, 6));
             RecipeHandler.addEnrichmentChamberRecipe(new ItemStack(Items.COAL, 1, 0),
@@ -374,12 +372,6 @@ public class Mekanism {
                   new ItemStack(MekanismItems.CompressedCarbon));
             RecipeHandler.addEnrichmentChamberRecipe(new ItemStack(Items.REDSTONE),
                   new ItemStack(MekanismItems.CompressedRedstone));
-            RecipeHandler.addEnrichmentChamberRecipe(new ItemStack(Blocks.LAPIS_ORE), new ItemStack(Items.DYE, 12, 4));
-            RecipeHandler.addEnrichmentChamberRecipe(new ItemStack(Blocks.COAL_ORE), new ItemStack(Items.COAL, 2));
-            RecipeHandler
-                  .addEnrichmentChamberRecipe(new ItemStack(Blocks.DIAMOND_ORE), new ItemStack(Items.DIAMOND, 2));
-            RecipeHandler
-                  .addEnrichmentChamberRecipe(new ItemStack(Blocks.EMERALD_ORE), new ItemStack(Items.EMERALD, 2));
             RecipeHandler.addEnrichmentChamberRecipe(new ItemStack(Blocks.MOSSY_COBBLESTONE),
                   new ItemStack(Blocks.COBBLESTONE));
             RecipeHandler
@@ -411,18 +403,10 @@ public class Mekanism {
 
         //Combiner recipes
         if (MekanismConfig.current().general.machinesManager.isEnabled(MachineType.COMBINER)) {
-            RecipeHandler.addCombinerRecipe(new ItemStack(Items.REDSTONE, 16), new ItemStack(Blocks.COBBLESTONE),
-                  new ItemStack(Blocks.REDSTONE_ORE));
-            RecipeHandler.addCombinerRecipe(new ItemStack(Items.DYE, 16, 4), new ItemStack(Blocks.COBBLESTONE),
-                  new ItemStack(Blocks.LAPIS_ORE));
             RecipeHandler.addCombinerRecipe(new ItemStack(Items.FLINT), new ItemStack(Blocks.COBBLESTONE),
                   new ItemStack(Blocks.GRAVEL));
-            RecipeHandler.addCombinerRecipe(new ItemStack(Items.EMERALD, 3), new ItemStack(Blocks.COBBLESTONE),
-                  new ItemStack(Blocks.EMERALD_ORE));
             RecipeHandler.addCombinerRecipe(new ItemStack(Items.COAL, 3), new ItemStack(Blocks.COBBLESTONE),
                   new ItemStack(Blocks.COAL_ORE));
-            RecipeHandler.addCombinerRecipe(new ItemStack(Items.QUARTZ, 8), new ItemStack(Blocks.NETHERRACK),
-                  new ItemStack(Blocks.QUARTZ_ORE));//enrich makes 6 from one ore
         }
 
         //Osmium Compressor Recipes
@@ -433,7 +417,6 @@ public class Mekanism {
 
         //Crusher Recipes
         if (MekanismConfig.current().general.machinesManager.isEnabled(MachineType.CRUSHER)) {
-            RecipeHandler.addCrusherRecipe(new ItemStack(Items.DIAMOND), new ItemStack(MekanismItems.OtherDust, 1, 0));
             RecipeHandler.addCrusherRecipe(new ItemStack(Items.IRON_INGOT),
                   new ItemStack(MekanismItems.Dust, 1, Resource.IRON.ordinal()));
             RecipeHandler.addCrusherRecipe(new ItemStack(Items.GOLD_INGOT),
@@ -597,7 +580,7 @@ public class Mekanism {
                   2 * MekanismConfig.current().general.FROM_H2.val(),
                   new GasStack(MekanismFluids.Sodium, 1), new GasStack(MekanismFluids.Chlorine, 1));
             RecipeHandler.addElectrolyticSeparatorRecipe(FluidRegistry.getFluidStack("heavywater", 2),
-                  MekanismConfig.current().usage.heavyWaterElectrolysisUsage.val(),
+                  MekanismConfig.current().usage.heavyWaterElectrolysis.val(),
                   new GasStack(MekanismFluids.Deuterium, 2),
                   new GasStack(MekanismFluids.Oxygen, 1));
         }
