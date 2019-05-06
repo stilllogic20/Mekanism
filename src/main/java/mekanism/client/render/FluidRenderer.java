@@ -49,7 +49,9 @@ public final class FluidRenderer {
 
     public static DisplayInteger getTankDisplay(RenderData data, double scale) {
         int maxStages = getStages(data);
-        int stage = Math.min(maxStages, (int) (scale * maxStages));
+        int stage = Math.min(maxStages, (int) scale * maxStages);
+        if (stage < 0)
+            stage = maxStages;
 
         if (cachedCenterFluids.containsKey(data)) {
             DisplayInteger[] ret = cachedCenterFluids.get(data);
@@ -69,7 +71,7 @@ public final class FluidRenderer {
             cachedCenterFluids.put(data, new DisplayInteger[maxStages + 1]);
         }
 
-        cachedCenterFluids.get(data)[stage] = display;
+        cachedCenterFluids.get(data)[Math.max(0, stage)] = display;
 
         if (maxStages == 0) {
             maxStages = stage = 1;
