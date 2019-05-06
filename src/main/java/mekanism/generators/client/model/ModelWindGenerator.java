@@ -159,7 +159,16 @@ public class ModelWindGenerator extends ModelBase {
         setRotation(post1d, -0.0347321F, 0F, -0.0347321F);
     }
 
-    public void render(float size, double angle) {
+    public void render(float size, float angle) {
+        final ModelRenderer blade1a = this.blade1a;
+        final ModelRenderer blade1b = this.blade1b;
+        final ModelRenderer blade2a = this.blade2a;
+        final ModelRenderer blade2b = this.blade2b;
+        final ModelRenderer blade3a = this.blade3a;
+        final ModelRenderer blade3b = this.blade3b;
+        final ModelRenderer bladeCap = this.bladeCap;
+        final ModelRenderer bladeCenter = this.bladeCenter;
+
         head.render(size);
         plateConnector2.render(size);
         plateConnector.render(size);
@@ -174,8 +183,10 @@ public class ModelWindGenerator extends ModelBase {
         post1c.render(size);
         post1d.render(size);
 
-        setRotation(blade1a, 0F, 0F, getRotation(getAbsoluteAngle(angle)));
-        setRotation(blade1b, 0F, 0F, 0.0349066F + getRotation(getAbsoluteAngle(angle)));
+        float abs = getAbsoluteAngle(angle);
+        float r = getRotation(abs);
+        setRotation(blade1a, 0F, 0F, r);
+        setRotation(blade1b, 0F, 0F, 0.0349066F + r);
 
         setRotation(blade2a, 0F, 0F, getRotation(getAbsoluteAngle(angle - 60)));
         setRotation(blade2b, 0F, 0F, 0.0349066F + getRotation(getAbsoluteAngle(angle - 60)));
@@ -183,8 +194,8 @@ public class ModelWindGenerator extends ModelBase {
         setRotation(blade3a, 0F, 0F, getRotation(getAbsoluteAngle(angle + 60)));
         setRotation(blade3b, 0F, 0F, 0.0349066F + getRotation(getAbsoluteAngle(angle + 60)));
 
-        setRotation(bladeCap, 0F, 0F, getRotation(getAbsoluteAngle(angle)));
-        setRotation(bladeCenter, 0F, 0F, getRotation(getAbsoluteAngle(angle)));
+        setRotation(bladeCap, 0F, 0F, r);
+        setRotation(bladeCenter, 0F, 0F, r);
 
         blade1a.render(size);
         blade2a.render(size);
@@ -197,12 +208,12 @@ public class ModelWindGenerator extends ModelBase {
         bladeCenter.render(size);
     }
 
-    public float getRotation(double angle) {
-        return ((float) angle / 180) * (float) Math.PI;
+    public float getRotation(float angle) {
+        return (angle / 180F) * (float) Math.PI;
     }
 
-    public double getAbsoluteAngle(double angle) {
-        return angle % 360;
+    public float getAbsoluteAngle(float angle) {
+        return angle % 360F;
     }
 
     private void setRotation(ModelRenderer model, float x, float y, float z) {
