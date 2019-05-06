@@ -1,6 +1,7 @@
 package mekanism.api;
 
 import javax.annotation.Nonnull;
+
 import net.minecraft.entity.Entity;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
@@ -13,7 +14,8 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.math.Vec3i;
 
 /**
- * Pos3D - a way of performing operations on objects in a three dimensional environment.
+ * Pos3D - a way of performing operations on objects in a three dimensional
+ * environment.
  *
  * @author aidancbrady
  */
@@ -94,18 +96,17 @@ public class Pos3D extends Vec3d {
     }
 
     public static double anglePreNorm(Pos3D pos1, Pos3D pos2) {
-        return Math.acos(pos1.clone().dotProduct(pos2));
+        return Math.acos(pos1.dotProduct(pos2));
     }
 
     public static AxisAlignedBB getAABB(Pos3D pos1, Pos3D pos2) {
         return new AxisAlignedBB(
-              pos1.x,
-              pos1.y,
-              pos1.z,
-              pos2.x,
-              pos2.y,
-              pos2.z
-        );
+                pos1.x,
+                pos1.y,
+                pos1.z,
+                pos2.x,
+                pos2.y,
+                pos2.z);
     }
 
     /**
@@ -123,8 +124,8 @@ public class Pos3D extends Vec3d {
     }
 
     /**
-     * Creates and returns a Pos3D with values representing the difference between this and the Pos3D in the
-     * parameters.
+     * Creates and returns a Pos3D with values representing the difference between
+     * this and the Pos3D in the parameters.
      *
      * @param vec - Vec3 to subtract
      * @return difference of the two Pos3Ds
@@ -163,7 +164,8 @@ public class Pos3D extends Vec3d {
     }
 
     /**
-     * Performs the same operation as translate(x, y, z), but with a Pos3D value instead.
+     * Performs the same operation as translate(x, y, z), but with a Pos3D value
+     * instead.
      *
      * @param pos - Pos3D value to translate by
      * @return translated Pos3D
@@ -173,15 +175,17 @@ public class Pos3D extends Vec3d {
     }
 
     /**
-     * Performs the same operation as translate(x, y, z), but by a set amount in a EnumFacing
+     * Performs the same operation as translate(x, y, z), but by a set amount in a
+     * EnumFacing
      */
     public Pos3D translate(EnumFacing direction, double amount) {
         return translate(direction.getDirectionVec().getX() * amount, direction.getDirectionVec().getY() * amount,
-              direction.getDirectionVec().getZ() * amount);
+                direction.getDirectionVec().getZ() * amount);
     }
 
     /**
-     * Performs the same operation as translate(x, y, z), but by a set amount in a EnumFacing
+     * Performs the same operation as translate(x, y, z), but by a set amount in a
+     * EnumFacing
      */
     public Pos3D translateExcludingSide(EnumFacing direction, double amount) {
         double xPos = x, yPos = y, zPos = z;
@@ -220,14 +224,17 @@ public class Pos3D extends Vec3d {
     @Nonnull
     @Override
     public Pos3D rotateYaw(float yaw) {
-        double yawRadians = Math.toRadians(yaw);
+        float yawRadians = (float) Math.toRadians(yaw);
 
         double xPos = x;
         double zPos = z;
 
+        final float syr = MathHelper.sin(yawRadians);
+        final float cyr = MathHelper.cos(yawRadians);
+
         if (yaw != 0) {
-            xPos = x * Math.cos(yawRadians) - z * Math.sin(yawRadians);
-            zPos = z * Math.cos(yawRadians) + x * Math.sin(yawRadians);
+            xPos = x * cyr - z * syr;
+            zPos = z * cyr + x * syr;
         }
 
         return new Pos3D(xPos, y, zPos);
@@ -236,14 +243,17 @@ public class Pos3D extends Vec3d {
     @Nonnull
     @Override
     public Pos3D rotatePitch(float pitch) {
-        double pitchRadians = Math.toRadians(pitch);
+        float pitchRadians = (float) Math.toRadians(pitch);
 
         double yPos = y;
         double zPos = z;
 
+        final float cpr = MathHelper.cos(pitchRadians);
+        final float spr = MathHelper.sin(pitchRadians);
+
         if (pitch != 0) {
-            yPos = y * Math.cos(pitchRadians) - z * Math.sin(pitchRadians);
-            zPos = z * Math.cos(pitchRadians) + y * Math.sin(pitchRadians);
+            yPos = y * cpr - z * spr;
+            zPos = z * cpr + y * spr;
         }
 
         return new Pos3D(x, yPos, zPos);
@@ -254,20 +264,24 @@ public class Pos3D extends Vec3d {
     }
 
     public Pos3D rotate(float yaw, float pitch, float roll) {
-        double yawRadians = Math.toRadians(yaw);
-        double pitchRadians = Math.toRadians(pitch);
-        double rollRadians = Math.toRadians(roll);
+        float yawRadians = (float) Math.toRadians(yaw);
+        float pitchRadians = (float) Math.toRadians(pitch);
+        float rollRadians = (float) Math.toRadians(roll);
 
-        double xPos = x * Math.cos(yawRadians) * Math.cos(pitchRadians) + z * (
-              Math.cos(yawRadians) * Math.sin(pitchRadians) * Math.sin(rollRadians) - Math.sin(yawRadians) * Math
-                    .cos(rollRadians)) + y * (Math.cos(yawRadians) * Math.sin(pitchRadians) * Math.cos(rollRadians)
-              + Math.sin(yawRadians) * Math.sin(rollRadians));
-        double zPos = x * Math.sin(yawRadians) * Math.cos(pitchRadians) + z * (
-              Math.sin(yawRadians) * Math.sin(pitchRadians) * Math.sin(rollRadians) + Math.cos(yawRadians) * Math
-                    .cos(rollRadians)) + y * (Math.sin(yawRadians) * Math.sin(pitchRadians) * Math.cos(rollRadians)
-              - Math.cos(yawRadians) * Math.sin(rollRadians));
-        double yPos = -x * Math.sin(pitchRadians) + z * Math.cos(pitchRadians) * Math.sin(rollRadians) + y * Math
-              .cos(pitchRadians) * Math.cos(rollRadians);
+        final float syr = MathHelper.sin(yawRadians);
+        final float cyr = MathHelper.cos(yawRadians);
+        final float spr = MathHelper.sin(pitchRadians);
+        final float cpr = MathHelper.cos(pitchRadians);
+        final float srr = MathHelper.sin(rollRadians);
+        final float crr = MathHelper.cos(rollRadians);
+
+        double xPos = x * cyr * cpr
+                + z * (cyr * spr * srr - syr * crr)
+                + y * (cyr * spr * crr + syr * srr);
+        double zPos = x * syr * cpr
+                + z * (syr * spr * srr + cyr * crr)
+                + y * (syr * spr * crr - cyr * srr);
+        double yPos = -x * spr + z * cpr * srr + y * cpr * crr;
 
         return new Pos3D(xPos, yPos, zPos);
     }
@@ -300,7 +314,7 @@ public class Pos3D extends Vec3d {
 
     public double[] getRotationMatrix(float angle) {
         double[] matrix = new double[16];
-        Pos3D axis = clone().normalize();
+        Pos3D axis = normalize();
 
         double x = axis.x;
         double y = axis.y;
@@ -308,9 +322,9 @@ public class Pos3D extends Vec3d {
 
         angle *= 0.0174532925D;
 
-        float cos = (float) Math.cos(angle);
+        float cos = MathHelper.cos(angle);
         float ocos = 1.0F - cos;
-        float sin = (float) Math.sin(angle);
+        float sin = MathHelper.sin(angle);
 
         matrix[0] = (x * x * ocos + cos);
         matrix[1] = (y * x * ocos + z * sin);
@@ -356,11 +370,6 @@ public class Pos3D extends Vec3d {
         return new Pos3D(Math.floor(x), Math.floor(y), Math.floor(z));
     }
 
-    @Override
-    public Pos3D clone() {
-        return new Pos3D(x, y, z);
-    }
-
     @Nonnull
     @Override
     public String toString() {
@@ -369,18 +378,21 @@ public class Pos3D extends Vec3d {
 
     @Override
     public boolean equals(Object obj) {
-        return obj instanceof Vec3d &&
-              ((Vec3d) obj).x == x &&
-              ((Vec3d) obj).y == y &&
-              ((Vec3d) obj).z == z;
+        if (obj == this)
+            return true;
+        if (obj != null && obj instanceof Vec3d) {
+            Vec3d o = (Vec3d) obj;
+            return o.x == x && o.y == y && o.z == z;
+        }
+        return false;
     }
 
     @Override
     public int hashCode() {
         int code = 1;
-        code = 31 * code + new Double(x).hashCode();
-        code = 31 * code + new Double(y).hashCode();
-        code = 31 * code + new Double(z).hashCode();
+        code = 31 * code + Double.hashCode(x);
+        code = 31 * code + Double.hashCode(y);
+        code = 31 * code + Double.hashCode(z);
         return code;
     }
 }

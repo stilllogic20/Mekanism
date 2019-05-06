@@ -31,7 +31,7 @@ public class LaserManager {
     }
 
     public static LaserInfo fireLaser(Pos3D from, EnumFacing direction, double energy, World world) {
-        Pos3D to = from.clone().translate(direction, MekanismConfig.current().general.laserRange.val() - 0.002);
+        Pos3D to = from.translate(direction, MekanismConfig.current().general.laserRange.val() - 0.002);
 
         RayTraceResult mop = world.rayTraceBlocks(from, to);
 
@@ -105,7 +105,7 @@ public class LaserManager {
     }
 
     public static RayTraceResult fireLaserClient(Pos3D from, EnumFacing direction, double energy, World world) {
-        Pos3D to = from.clone().translate(direction, MekanismConfig.current().general.laserRange.val() - 0.002);
+        Pos3D to = from.translate(direction, MekanismConfig.current().general.laserRange.val() - 0.002);
         RayTraceResult mop = world.rayTraceBlocks(from, to);
 
         if (mop != null) {

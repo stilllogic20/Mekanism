@@ -33,6 +33,7 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.MathHelper;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidStack;
@@ -250,7 +251,7 @@ public class TileEntityThermalEvaporationController extends TileEntityThermalEva
             temperature = base;
         }
 
-        float incr = (float) Math.sqrt(Math.abs(temperature - base)) * (float) MekanismConfig
+        float incr = MathHelper.sqrt(MathHelper.abs(temperature - base)) * (float) MekanismConfig
               .current().general.evaporationHeatDissipation.val();
 
         if (temperature > base) {

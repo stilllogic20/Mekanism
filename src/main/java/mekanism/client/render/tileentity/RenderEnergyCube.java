@@ -2,6 +2,9 @@ package mekanism.client.render.tileentity;
 
 import java.util.HashMap;
 import java.util.Map;
+
+import org.lwjgl.opengl.GL11;
+
 import mekanism.api.transmitters.TransmissionType;
 import mekanism.client.MekanismClient;
 import mekanism.client.model.ModelEnergyCube;
@@ -15,9 +18,9 @@ import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.math.MathHelper;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import org.lwjgl.opengl.GL11;
 
 @SideOnly(Side.CLIENT)
 public class RenderEnergyCube extends TileEntitySpecialRenderer<TileEntityEnergyCube> {
@@ -100,7 +103,7 @@ public class RenderEnergyCube extends TileEntitySpecialRenderer<TileEntityEnergy
             GL11.glColor4f(c[0] / 255F, c[1] / 255F, c[2] / 255F,
                   (float) (tileEntity.getEnergy() / tileEntity.getMaxEnergy()));
             GlStateManager
-                  .translate(0, (float) Math.sin(Math.toRadians((MekanismClient.ticksPassed + partialTick) * 3)) / 7,
+                  .translate(0, MathHelper.sin((float) Math.toRadians((MekanismClient.ticksPassed + partialTick) * 3)) / 7,
                         0);
             GlStateManager.rotate((MekanismClient.ticksPassed + partialTick) * 4, 0, 1, 0);
             GlStateManager.rotate(36F + (MekanismClient.ticksPassed + partialTick) * 4, 0, 1, 1);

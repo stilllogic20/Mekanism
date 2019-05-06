@@ -1,11 +1,13 @@
 package mekanism.common.entity;
 
 import javax.annotation.Nonnull;
+
 import mekanism.common.config.MekanismConfig;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.MoverType;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumParticleTypes;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 
 public class EntityObsidianTNT extends Entity {
@@ -34,9 +36,9 @@ public class EntityObsidianTNT extends Entity {
 
         float randPi = (float) (Math.random() * Math.PI * 2);
 
-        motionX = -(Math.sin(randPi)) * 0.02F;
+        motionX = -(MathHelper.sin(randPi)) * 0.02F;
         motionY = 0.2;
-        motionZ = -(Math.cos(randPi)) * 0.02F;
+        motionZ = -(MathHelper.cos(randPi)) * 0.02F;
 
         fuse = MekanismConfig.current().general.obsidianTNTDelay.val();
 

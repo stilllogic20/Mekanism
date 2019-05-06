@@ -18,9 +18,9 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 @SideOnly(Side.CLIENT)
 public class ModelEnergyCube extends ModelBase {
 
-    public static ResourceLocation OVERLAY_ON = MekanismUtils
+    public static final ResourceLocation OVERLAY_ON = MekanismUtils
           .getResource(ResourceType.RENDER, "EnergyCube_OverlayOn.png");
-    public static ResourceLocation OVERLAY_OFF = MekanismUtils
+    public static final ResourceLocation OVERLAY_OFF = MekanismUtils
           .getResource(ResourceType.RENDER, "EnergyCube_OverlayOff.png");
     public ModelRenderer[] leds1;
     public ModelRenderer[] leds2;
@@ -394,15 +394,16 @@ public class ModelEnergyCube extends ModelBase {
     }
 
     public void renderSide(float size, EnumFacing side, IOState state, EnergyCubeTier tier, TextureManager renderer) {
+        int ordinal = side.ordinal();
         if (state != IOState.OFF) {
-            connectors[side.ordinal()].render(size);
-            ports[side.ordinal()].render(size);
+            connectors[ordinal].render(size);
+            ports[ordinal].render(size);
 
             if (state == IOState.OUTPUT) {
                 MekanismRenderer.glowOn();
                 renderer.bindTexture(RenderEnergyCube.resources.get(tier));
 
-                ports[side.ordinal()].render(size);
+                ports[ordinal].render(size);
 
                 MekanismRenderer.glowOff();
             }
@@ -414,8 +415,8 @@ public class ModelEnergyCube extends ModelBase {
             MekanismRenderer.glowOn();
         }
 
-        leds1[side.ordinal()].render(size);
-        leds2[side.ordinal()].render(size);
+        leds1[ordinal].render(size);
+        leds2[ordinal].render(size);
 
         if (state == IOState.OUTPUT) {
             MekanismRenderer.glowOff();
@@ -444,7 +445,7 @@ public class ModelEnergyCube extends ModelBase {
         }
 
         public void render(float size) {
-            cube.render(0.0625F);
+            cube.render(size);
         }
     }
 }

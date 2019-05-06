@@ -1,6 +1,7 @@
 package mekanism.common.block;
 
 import javax.annotation.Nonnull;
+
 import mekanism.api.EnumColor;
 import mekanism.common.Mekanism;
 import mekanism.common.block.states.BlockStatePlastic;
@@ -15,6 +16,7 @@ import net.minecraft.item.EnumDyeColor;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
@@ -57,8 +59,8 @@ public class BlockPlastic extends Block {
         if (type == PlasticBlockType.ROAD) {
             double boost = 1.6;
             double a = Math.atan2(entityIn.motionX, entityIn.motionZ);
-            entityIn.motionX += Math.sin(a) * boost * slipperiness;
-            entityIn.motionZ += Math.cos(a) * boost * slipperiness;
+            entityIn.motionX += MathHelper.sin((float) a) * boost * slipperiness;
+            entityIn.motionZ += MathHelper.cos((float) a) * boost * slipperiness;
         }
     }
 

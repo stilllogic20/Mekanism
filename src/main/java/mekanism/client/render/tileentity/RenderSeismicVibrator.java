@@ -6,6 +6,7 @@ import mekanism.common.util.MekanismUtils;
 import mekanism.common.util.MekanismUtils.ResourceType;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
+import net.minecraft.util.math.MathHelper;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -37,7 +38,7 @@ public class RenderSeismicVibrator extends TileEntitySpecialRenderer<TileEntityS
                 break;
         }
 
-        float actualRate = (float) Math.sin((tileEntity.clientPiston + (tileEntity.isActive ? partialTick : 0)) / 5F);
+        float actualRate = MathHelper.sin((float) (tileEntity.clientPiston + (tileEntity.isActive ? partialTick : 0)) / 5F);
 
         GlStateManager.rotate(180F, 0.0F, 0.0F, 1.0F);
         model.renderWithPiston(Math.max(0, actualRate), 0.0625F);
