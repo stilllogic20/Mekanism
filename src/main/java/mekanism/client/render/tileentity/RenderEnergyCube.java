@@ -117,6 +117,6 @@ public class RenderEnergyCube extends TileEntitySpecialRenderer<TileEntityEnergy
             GlStateManager.popMatrix();
         }
 
-        MekanismRenderer.machineRenderer.render(tileEntity, x, y, z, partialTick, destroyStage, alpha);
+        MekanismRenderer.getMachineRenderer().render(tileEntity, x, y, z, partialTick, destroyStage, alpha);
     }
 }

@@ -18,6 +18,7 @@ import mekanism.client.render.tileentity.RenderThermalEvaporationController;
 import mekanism.client.render.transmitter.RenderLogisticalTransporter;
 import mekanism.client.render.transmitter.RenderMechanicalPipe;
 import mekanism.common.base.IMetaItem;
+import mekanism.common.base.ISideConfiguration;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.BufferBuilder;
@@ -34,6 +35,7 @@ import net.minecraft.client.renderer.vertex.VertexFormat;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.event.TextureStitchEvent;
@@ -56,13 +58,18 @@ public class MekanismRenderer {
     public static float GAS_RENDER_BASE = 0.2F;
     public static Map<TransmissionType, TextureAtlasSprite> overlays = new HashMap<>();
     public static int[] directionMap = new int[]{3, 0, 1, 2};
-    public static RenderConfigurableMachine<?> machineRenderer = new RenderConfigurableMachine<>();
+    private static RenderConfigurableMachine<?> machineRenderer = new RenderConfigurableMachine<>();
     public static TextureAtlasSprite missingIcon;
     private static float lightmapLastX;
     private static float lightmapLastY;
     private static boolean optifineBreak = false;
     private static TextureMap texMap = null;
 
+    @SuppressWarnings("unchecked")
+    public static <S extends TileEntity & ISideConfiguration> RenderConfigurableMachine<S> getMachineRenderer() {
+        return (RenderConfigurableMachine<S>) machineRenderer;
+    }
+    
     public static void init() {
         MinecraftForge.EVENT_BUS.register(new MekanismRenderer());
     }
