@@ -52,7 +52,7 @@ public class TurbineUpdateProtocol extends UpdateProtocol<SynchronizedTurbineDat
 
     @Override
     protected boolean canForm(SynchronizedTurbineData structure) {
-        if (structure.volLength % 2 == 1 && structure.volWidth % 2 == 1) {
+        if ((structure.volLength & 1) == 1 && (structure.volWidth & 1) == 1) {
             int innerRadius = (Math.min(structure.volLength, structure.volWidth) - 3) / 2;
 
             if (innerRadius >= Math.ceil((structure.volHeight - 2) / 4)) {

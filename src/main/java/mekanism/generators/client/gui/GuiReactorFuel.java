@@ -137,7 +137,7 @@ public class GuiReactorFuel extends GuiMekanismTile<TileEntityReactorController>
     private void setInjection() {
         if (!injectionRateField.getText().isEmpty()) {
             int toUse = Math.max(0, Integer.parseInt(injectionRateField.getText()));
-            toUse -= toUse % 2;
+            toUse -= toUse & 1;
             TileNetworkList data = TileNetworkList.withContents(0, toUse);
             Mekanism.packetHandler.sendToServer(new TileEntityMessage(Coord4D.get(tileEntity), data));
             injectionRateField.setText("");

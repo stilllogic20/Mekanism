@@ -46,7 +46,7 @@ public class RenderObsidianTNTPrimed extends Render<EntityObsidianTNT> {
         renderer.renderBlockBrightness(MekanismBlocks.ObsidianTNT.getDefaultState(), entityobsidiantnt.getBrightness());
         GlStateManager.translate(0.0F, 0.0F, 1.0F);
 
-        if (entityobsidiantnt.fuse / 5 % 2 == 0) {
+        if (((entityobsidiantnt.fuse / 5) & 1) == 0) {
             GL11.glDisable(GL11.GL_TEXTURE_2D);
             GL11.glDisable(GL11.GL_LIGHTING);
             GL11.glEnable(GL11.GL_BLEND);

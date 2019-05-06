@@ -56,12 +56,11 @@ public class MekanismRenderer {
     public static float GAS_RENDER_BASE = 0.2F;
     public static Map<TransmissionType, TextureAtlasSprite> overlays = new HashMap<>();
     public static int[] directionMap = new int[]{3, 0, 1, 2};
-    public static RenderConfigurableMachine machineRenderer = new RenderConfigurableMachine();
+    public static RenderConfigurableMachine<?> machineRenderer = new RenderConfigurableMachine<>();
     public static TextureAtlasSprite missingIcon;
     private static float lightmapLastX;
     private static float lightmapLastY;
     private static boolean optifineBreak = false;
-    private static String[] simpleSides = new String[]{"Bottom", "Top", "Front", "Back", "Left", "Right"};
     private static TextureMap texMap = null;
 
     public static void init() {
@@ -188,7 +187,7 @@ public class MekanismRenderer {
         System.arraycopy(quad.getVertexData(), 0, vertices, 0, vertices.length);
 
         for (int i = 0; i < 4; i++) {
-            int nextIndex = (i + amount) % 4;
+            int nextIndex = (i + amount) & 3;
             int quadSize = quad.getFormat().getIntegerSize();
             int uvIndex = quad.getFormat().getUvOffsetById(0) / 4;
             if (i + uvIndex + 1 < vertices.length) {

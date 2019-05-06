@@ -386,7 +386,7 @@ public class ItemAtomicDisassembler extends ItemEnergized {
 
                 if (coord.exists(world) && checkID(coord.getBlock(world)) && (stack.isItemEqual(blockStack) || (
                       coord.getBlock(world) == startBlock && OreDictCache.getOreDictName(stack).contains("logWood")
-                            && coord.getBlockMeta(world) % 4 == stack.getItemDamage() % 4))) {
+                            && (coord.getBlockMeta(world) & 3) == (stack.getItemDamage() & 3))) {
                     loop(coord);
                 }
             }

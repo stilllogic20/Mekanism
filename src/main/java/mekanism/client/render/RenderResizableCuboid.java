@@ -503,7 +503,7 @@ public class RenderResizableCuboid {
         float minV = sprite.getInterpolatedV(startV * 16);
         float maxV = sprite.getInterpolatedV(endV * 16);
         float[] uvarray = new float[]{minU, maxU, minV, maxV};
-        if (flips % 2 == 1) {
+        if ((flips & 1) == 1) {
             float holder = uvarray[0];
             uvarray[0] = uvarray[1];
             uvarray[1] = holder;
@@ -526,7 +526,7 @@ public class RenderResizableCuboid {
         float maxV = sprite.getInterpolatedV(getValue(end, v) * 16);
 
         float[] uvarray = new float[]{minU, maxU, minV, maxV};
-        if (flips % 2 == 1) {
+        if ((flips & 1) == 1) {
             float holder = uvarray[0];
             uvarray[0] = uvarray[1];
             uvarray[1] = holder;

@@ -150,7 +150,7 @@ public class FusionReactor {
         int amountAvailable = 2 * min(getDeuteriumTank().getStored(), getTritiumTank().getStored());
         int amountToInject = min(amountNeeded, min(amountAvailable, injectionRate));
 
-        amountToInject -= amountToInject % 2;
+        amountToInject -= amountToInject & 1;
 
         getDeuteriumTank().draw(amountToInject / 2, true);
         getTritiumTank().draw(amountToInject / 2, true);
@@ -406,7 +406,7 @@ public class FusionReactor {
 
         int capRate = Math.min(Math.max(1, rate), MAX_INJECTION);
 
-        capRate -= capRate % 2;
+        capRate -= (capRate & 1);
 
         controller.waterTank.setCapacity(TileEntityReactorController.MAX_WATER * capRate);
         controller.steamTank.setCapacity(TileEntityReactorController.MAX_STEAM * capRate);
