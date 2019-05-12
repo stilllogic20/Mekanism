@@ -171,13 +171,8 @@ public class GuiOredictionificator extends GuiMekanismTile<TileEntityOredictioni
     protected void mouseClickMove(int mouseX, int mouseY, int button, long ticks) {
         super.mouseClickMove(mouseX, mouseY, button, ticks);
         if (isDragging) {
-<<<<<<< HEAD
             int yAxis = (mouseY - (height - ySize) / 2);
             scroll = Math.min(Math.max((yAxis - 18 - dragOffset) / 73F, 0), 1);
-=======
-            int yAxis = mouseY - (height - ySize) / 2;
-            scroll = Math.min(Math.max((float) (yAxis - 18 - dragOffset) / 73F, 0), 1);
->>>>>>> upstream/1.12
         }
     }
 

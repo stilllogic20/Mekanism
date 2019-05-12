@@ -102,12 +102,7 @@ public class PlayerState {
             // If the player is the "local" player, we need to tell the server the state has
             // changed
             if (isLocal) {
-<<<<<<< HEAD
-                Mekanism.packetHandler
-                        .sendToServer(PacketScubaTankData.ScubaTankDataMessage.UPDATE(uuid, isActive));
-=======
                 Mekanism.packetHandler.sendToServer(PacketScubaTankData.ScubaTankDataMessage.UPDATE(uuid, isActive));
->>>>>>> upstream/1.12
             }
 
             // Start a sound playing if the person is now using a gasmask
@@ -151,12 +146,7 @@ public class PlayerState {
             // If the player is the "local" player, we need to tell the server the state has
             // changed
             if (isLocal) {
-<<<<<<< HEAD
-                Mekanism.packetHandler.sendToServer(new FlamethrowerDataMessage(FlamethrowerPacket.UPDATE, null,
-                        uuid, isActive));
-=======
                 Mekanism.packetHandler.sendToServer(new FlamethrowerDataMessage(FlamethrowerPacket.UPDATE, null, uuid, isActive));
->>>>>>> upstream/1.12
             }
 
             // Start a sound playing if the person is now using a flamethrower
