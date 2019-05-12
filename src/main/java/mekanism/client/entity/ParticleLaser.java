@@ -50,7 +50,7 @@ public class ParticleLaser extends Particle {
 
         GlStateManager.pushMatrix();
         GL11.glPushAttrib(GL11.GL_POLYGON_BIT + GL11.GL_ENABLE_BIT);
-        GL11.glDisable(GL11.GL_CULL_FACE);
+        GlStateManager.disableCull();
         MekanismRenderer.glowOn();
 
         profiler.startSection("renderSetup");
@@ -144,8 +144,8 @@ public class ParticleLaser extends Particle {
 
         profiler.startSection("cleanup");
         MekanismRenderer.glowOff();
-        GL11.glEnable(GL11.GL_CULL_FACE);
-        GL11.glPopAttrib();
+        GlStateManager.enableCull();
+        GlStateManager.popAttrib();
         GlStateManager.popMatrix();
 
         profiler.startSection("bufferBegin");
