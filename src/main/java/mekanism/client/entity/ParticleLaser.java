@@ -39,16 +39,21 @@ public class ParticleLaser extends Particle {
 
     @Override
     public void renderParticle(BufferBuilder buffer, Entity entityIn, float partialTicks, float rotationX, float rotationZ, float rotationYZ, float rotationXY, float rotationXZ) {
+        final Profiler profiler = this.profiler;
         profiler.startSection("renderParticleLaser");
+
         Tessellator tessellator = Tessellator.getInstance();
 
+        profiler.startSection("flushPrevBuffers");
         tessellator.draw();
+        profiler.endSection();
 
         GlStateManager.pushMatrix();
         GL11.glPushAttrib(GL11.GL_POLYGON_BIT + GL11.GL_ENABLE_BIT);
         GL11.glDisable(GL11.GL_CULL_FACE);
         MekanismRenderer.glowOn();
 
+        profiler.startSection("renderSetup");
         final double prevPosX = this.prevPosX;
         final double prevPosY = this.prevPosY;
         final double prevPosZ = this.prevPosZ;
@@ -57,6 +62,7 @@ public class ParticleLaser extends Particle {
         float newY = (float) (prevPosY + (posY - prevPosY) * partialTicks - interpPosY);
         float newZ = (float) (prevPosZ + (posZ - prevPosZ) * partialTicks - interpPosZ);
 
+        profiler.startSection("setRotationAndTranslation");
         GlStateManager.translate(newX, newY, newZ);
 
         switch (direction) {
@@ -73,11 +79,14 @@ public class ParticleLaser extends Particle {
                 GlStateManager.rotate(90, 1, 0, 0);
                 break;
         }
+        profiler.endSection();
 
+        profiler.startSection("getInterpolatedUV");
         final float uMin = particleTexture.getInterpolatedU(0);
         final float uMax = particleTexture.getInterpolatedU(16);
         final float vMin = particleTexture.getInterpolatedV(0);
         final float vMax = particleTexture.getInterpolatedV(16);
+        profiler.endSection();
 
         final float particleRed = this.particleRed;
         final float particleGreen = this.particleGreen;
@@ -86,8 +95,13 @@ public class ParticleLaser extends Particle {
 
         final float particleScale  = this.particleScale;
         final double length = this.length;
+        profiler.endSection();
 
+        profiler.startSection("drawLasers");
+        profiler.startSection("pass1");
         GlStateManager.rotate(45, 0, 1, 0);
+
+        profiler.startSection("build");
         buffer.begin(GL11.GL_QUADS, DefaultVertexFormats.PARTICLE_POSITION_TEX_COLOR_LMAP);
         buffer.pos(-particleScale, -length / 2, 0).tex(uMin, vMin)
               .color(particleRed, particleGreen, particleBlue, particleAlpha).lightmap(240, 240).endVertex();
@@ -97,9 +111,19 @@ public class ParticleLaser extends Particle {
               .color(particleRed, particleGreen, particleBlue, particleAlpha).lightmap(240, 240).endVertex();
         buffer.pos(particleScale, -length / 2, 0).tex(uMax, vMin)
               .color(particleRed, particleGreen, particleBlue, particleAlpha).lightmap(240, 240).endVertex();
-        tessellator.draw();
+        profiler.endSection();
 
+        profiler.startSection("flush");
+        tessellator.draw();
+        profiler.endSection();
+
+        profiler.endSection();
+
+
+        profiler.startSection("pass2");
         GlStateManager.rotate(90, 0, 1, 0);
+
+        profiler.startSection("build");
         buffer.begin(GL11.GL_QUADS, DefaultVertexFormats.PARTICLE_POSITION_TEX_COLOR_LMAP);
         buffer.pos(-particleScale, -length / 2, 0).tex(uMin, vMin)
               .color(particleRed, particleGreen, particleBlue, particleAlpha).lightmap(240, 240).endVertex();
@@ -109,13 +133,26 @@ public class ParticleLaser extends Particle {
               .color(particleRed, particleGreen, particleBlue, particleAlpha).lightmap(240, 240).endVertex();
         buffer.pos(particleScale, -length / 2, 0).tex(uMax, vMin)
               .color(particleRed, particleGreen, particleBlue, particleAlpha).lightmap(240, 240).endVertex();
-        tessellator.draw();
+        profiler.endSection();
 
+        profiler.startSection("flush");
+        tessellator.draw();
+        profiler.endSection();
+
+        profiler.endSection();
+        profiler.endSection();
+
+        profiler.startSection("cleanup");
         MekanismRenderer.glowOff();
+        GL11.glEnable(GL11.GL_CULL_FACE);
         GL11.glPopAttrib();
         GlStateManager.popMatrix();
 
+        profiler.startSection("bufferBegin");
         buffer.begin(GL11.GL_QUADS, DefaultVertexFormats.PARTICLE_POSITION_TEX_COLOR_LMAP);
+        profiler.endSection();
+        profiler.endSection();
+
         profiler.endSection();
     }
 
