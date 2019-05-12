@@ -49,6 +49,10 @@ public class ParticleLaser extends Particle {
         GL11.glDisable(GL11.GL_CULL_FACE);
         MekanismRenderer.glowOn();
 
+        final double prevPosX = this.prevPosX;
+        final double prevPosY = this.prevPosY;
+        final double prevPosZ = this.prevPosZ;
+
         float newX = (float) (prevPosX + (posX - prevPosX) * partialTicks - interpPosX);
         float newY = (float) (prevPosY + (posY - prevPosY) * partialTicks - interpPosY);
         float newZ = (float) (prevPosZ + (posZ - prevPosZ) * partialTicks - interpPosZ);
@@ -70,10 +74,18 @@ public class ParticleLaser extends Particle {
                 break;
         }
 
-        float uMin = particleTexture.getInterpolatedU(0);
-        float uMax = particleTexture.getInterpolatedU(16);
-        float vMin = particleTexture.getInterpolatedV(0);
-        float vMax = particleTexture.getInterpolatedV(16);
+        final float uMin = particleTexture.getInterpolatedU(0);
+        final float uMax = particleTexture.getInterpolatedU(16);
+        final float vMin = particleTexture.getInterpolatedV(0);
+        final float vMax = particleTexture.getInterpolatedV(16);
+
+        final float particleRed = this.particleRed;
+        final float particleGreen = this.particleGreen;
+        final float particleBlue = this.particleBlue;
+        final float particleAlpha = this.particleAlpha;
+
+        final float particleScale  = this.particleScale;
+        final double length = this.length;
 
         GlStateManager.rotate(45, 0, 1, 0);
         buffer.begin(GL11.GL_QUADS, DefaultVertexFormats.PARTICLE_POSITION_TEX_COLOR_LMAP);
