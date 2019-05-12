@@ -2,12 +2,14 @@ package mekanism.client.entity;
 
 import mekanism.api.Pos3D;
 import mekanism.client.render.MekanismRenderer;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.particle.Particle;
 import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.entity.Entity;
+import net.minecraft.profiler.Profiler;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
@@ -19,6 +21,8 @@ public class ParticleLaser extends Particle {
 
     private double length;
     private EnumFacing direction;
+
+    private final Profiler profiler = Minecraft.getMinecraft().profiler;
 
     public ParticleLaser(World world, Pos3D start, Pos3D end, EnumFacing dir, double energy) {
         super(world, (start.x + end.x) / 2D, (start.y + end.y) / 2D, (start.z + end.z) / 2D);
@@ -35,6 +39,7 @@ public class ParticleLaser extends Particle {
 
     @Override
     public void renderParticle(BufferBuilder buffer, Entity entityIn, float partialTicks, float rotationX, float rotationZ, float rotationYZ, float rotationXY, float rotationXZ) {
+        profiler.startSection("renderParticleLaser");
         Tessellator tessellator = Tessellator.getInstance();
 
         tessellator.draw();
@@ -99,6 +104,7 @@ public class ParticleLaser extends Particle {
         GlStateManager.popMatrix();
 
         buffer.begin(7, DefaultVertexFormats.PARTICLE_POSITION_TEX_COLOR_LMAP);
+        profiler.endSection();
     }
 
     @Override

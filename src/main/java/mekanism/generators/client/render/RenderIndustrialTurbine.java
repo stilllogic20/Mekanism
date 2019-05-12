@@ -7,8 +7,10 @@ import mekanism.client.render.MekanismRenderer;
 import mekanism.common.content.tank.TankUpdateProtocol;
 import mekanism.generators.common.tile.turbine.TileEntityTurbineCasing;
 import mekanism.generators.common.tile.turbine.TileEntityTurbineRotor;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
+import net.minecraft.profiler.Profiler;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraftforge.fluids.FluidRegistry;
@@ -22,9 +24,13 @@ public class RenderIndustrialTurbine extends TileEntitySpecialRenderer<TileEntit
 
     private FluidStack STEAM = new FluidStack(FluidRegistry.getFluid("steam"), 1);
 
+    private final Profiler profiler = Minecraft.getMinecraft().profiler;
+
     @Override
     public void render(TileEntityTurbineCasing tileEntity, double x, double y, double z, float partialTick, int destroyStage, float alpha) {
+        profiler.startSection("renderIndustrialTurbine");
         renderAModelAt(tileEntity, x, y, z, partialTick, destroyStage);
+        profiler.endSection();
     }
 
     public void renderAModelAt(TileEntityTurbineCasing tileEntity, double x, double y, double z, float partialTick, int destroyStage) {

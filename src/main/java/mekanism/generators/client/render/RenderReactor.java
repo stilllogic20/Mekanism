@@ -1,5 +1,7 @@
 package mekanism.generators.client.render;
 
+import net.minecraft.client.Minecraft;
+import net.minecraft.profiler.Profiler;
 import org.lwjgl.opengl.GL11;
 
 import mekanism.api.EnumColor;
@@ -20,8 +22,11 @@ public class RenderReactor extends TileEntitySpecialRenderer<TileEntityReactorCo
 
     private ModelEnergyCore core = new ModelEnergyCore();
 
+    private final Profiler profiler = Minecraft.getMinecraft().profiler;
+
     @Override
     public void render(TileEntityReactorController tileEntity, double x, double y, double z, float partialTick, int destroyStage, float alpha) {
+        profiler.startSection("renderReactor");
         if (tileEntity.isBurning()) {
             GlStateManager.pushMatrix();
             GL11.glTranslated(x + 0.5, y - 1.5, z + 0.5);
@@ -73,5 +78,6 @@ public class RenderReactor extends TileEntitySpecialRenderer<TileEntityReactorCo
 
             GlStateManager.popMatrix();
         }
+        profiler.endSection();
     }
 }

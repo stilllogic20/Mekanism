@@ -4,12 +4,16 @@ import mekanism.client.render.MekanismRenderer;
 import mekanism.common.ColourRGBA;
 import mekanism.common.config.MekanismConfig;
 import mekanism.common.tile.transmitter.TileEntityUniversalCable;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.Tessellator;
+import net.minecraft.profiler.Profiler;
 import net.minecraft.util.EnumFacing;
 import org.lwjgl.opengl.GL11;
 
 public class RenderUniversalCable extends RenderTransmitterBase<TileEntityUniversalCable> {
+
+    private final Profiler profiler = Minecraft.getMinecraft().profiler;
 
     @Override
     public void render(TileEntityUniversalCable cable, double x, double y, double z, float partialTick, int destroyStage, float alpha) {
@@ -17,6 +21,7 @@ public class RenderUniversalCable extends RenderTransmitterBase<TileEntityUniver
             return;
         }
 
+        profiler.startSection("renderUniversalCable");
         push();
         Tessellator tessellator = Tessellator.getInstance();
         BufferBuilder worldRenderer = tessellator.getBuffer();
@@ -32,6 +37,7 @@ public class RenderUniversalCable extends RenderTransmitterBase<TileEntityUniver
 
         MekanismRenderer.glowOff();
         pop();
+        profiler.endSection();
     }
 
     public void renderEnergySide(BufferBuilder renderer, EnumFacing side, TileEntityUniversalCable cable) {
