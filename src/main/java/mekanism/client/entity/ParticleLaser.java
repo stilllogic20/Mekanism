@@ -19,10 +19,10 @@ import org.lwjgl.opengl.GL11;
 @SideOnly(Side.CLIENT)
 public class ParticleLaser extends Particle {
 
+    private static final Profiler PROFILER = Minecraft.getMinecraft().profiler;
+
     private double length;
     private EnumFacing direction;
-
-    private final Profiler profiler = Minecraft.getMinecraft().profiler;
 
     public ParticleLaser(World world, Pos3D start, Pos3D end, EnumFacing dir, double energy) {
         super(world, (start.x + end.x) / 2D, (start.y + end.y) / 2D, (start.z + end.z) / 2D);
@@ -39,7 +39,7 @@ public class ParticleLaser extends Particle {
 
     @Override
     public void renderParticle(BufferBuilder buffer, Entity entityIn, float partialTicks, float rotationX, float rotationZ, float rotationYZ, float rotationXY, float rotationXZ) {
-        final Profiler profiler = this.profiler;
+        final Profiler profiler = PROFILER;
         profiler.startSection("renderParticleLaser");
 
         Tessellator tessellator = Tessellator.getInstance();
