@@ -103,7 +103,7 @@ public class ParticleLaser extends Particle {
         GL11.glPopAttrib();
         GlStateManager.popMatrix();
 
-        buffer.begin(7, DefaultVertexFormats.PARTICLE_POSITION_TEX_COLOR_LMAP);
+        buffer.begin(GL11.GL_QUADS, DefaultVertexFormats.PARTICLE_POSITION_TEX_COLOR_LMAP);
         profiler.endSection();
     }
 
