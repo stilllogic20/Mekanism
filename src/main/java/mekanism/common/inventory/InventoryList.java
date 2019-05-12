@@ -32,8 +32,7 @@ public class InventoryList implements IInventory {
     @Nonnull
     @Override
     public ItemStack getStackInSlot(int index) {
-        return index >= 0 && index < this.inventoryContents.size() ? this.inventoryContents.get(index)
-              : ItemStack.EMPTY;
+        return index >= 0 && index < this.inventoryContents.size() ? this.inventoryContents.get(index) : ItemStack.EMPTY;
     }
 
     /**
@@ -43,11 +42,9 @@ public class InventoryList implements IInventory {
     @Override
     public ItemStack decrStackSize(int index, int count) {
         ItemStack itemstack = ItemStackHelper.getAndSplit(this.inventoryContents, index, count);
-
         if (!itemstack.isEmpty()) {
             this.markDirty();
         }
-
         return itemstack;
     }
 
@@ -58,13 +55,11 @@ public class InventoryList implements IInventory {
     @Override
     public ItemStack removeStackFromSlot(int index) {
         ItemStack itemstack = this.inventoryContents.get(index);
-
         if (itemstack.isEmpty()) {
             return ItemStack.EMPTY;
-        } else {
-            this.inventoryContents.set(index, ItemStack.EMPTY);
-            return itemstack;
         }
+        this.inventoryContents.set(index, ItemStack.EMPTY);
+        return itemstack;
     }
 
     /**
@@ -73,11 +68,9 @@ public class InventoryList implements IInventory {
     @Override
     public void setInventorySlotContents(int index, @Nonnull ItemStack stack) {
         this.inventoryContents.set(index, stack);
-
         if (!stack.isEmpty() && stack.getCount() > this.getInventoryStackLimit()) {
             stack.setCount(this.getInventoryStackLimit());
         }
-
         this.markDirty();
     }
 
@@ -96,7 +89,6 @@ public class InventoryList implements IInventory {
                 return false;
             }
         }
-
         return true;
     }
 
@@ -121,7 +113,6 @@ public class InventoryList implements IInventory {
      * Sets the name of this inventory. This is displayed to the client on opening.
      */
     public void setCustomName(String inventoryTitleIn) {
-
     }
 
     /**
@@ -130,8 +121,7 @@ public class InventoryList implements IInventory {
     @Nonnull
     @Override
     public ITextComponent getDisplayName() {
-        return (this.hasCustomName() ? new TextComponentString(this.getName())
-              : new TextComponentTranslation(this.getName()));
+        return this.hasCustomName() ? new TextComponentString(this.getName()) : new TextComponentTranslation(this.getName());
     }
 
     /**
@@ -143,8 +133,7 @@ public class InventoryList implements IInventory {
     }
 
     /**
-     * For tile entities, ensures the chunk containing the tile entity is saved to disk later - the game won't think it
-     * hasn't changed and skip it.
+     * For tile entities, ensures the chunk containing the tile entity is saved to disk later - the game won't think it hasn't changed and skip it.
      */
     @Override
     public void markDirty() {
@@ -168,8 +157,7 @@ public class InventoryList implements IInventory {
     }
 
     /**
-     * Returns true if automation is allowed to insert the given stack (ignoring stack size) into the given slot. For
-     * guis use Slot.isItemValid
+     * Returns true if automation is allowed to insert the given stack (ignoring stack size) into the given slot. For guis use Slot.isItemValid
      */
     @Override
     public boolean isItemValidForSlot(int index, @Nonnull ItemStack stack) {

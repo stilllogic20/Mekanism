@@ -4,15 +4,16 @@ import java.util.HashMap;
 import java.util.Map;
 import javax.annotation.Nonnull;
 import mekanism.common.Mekanism;
+import mekanism.common.fixers.MekanismDataFixers.MekFixers;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.datafix.IFixableData;
 
-public class TEFixer implements IFixableData {
+public class TEFixer extends BaseMekanismFixer {
 
     private final Map<String, String> tileEntityNames = new HashMap<>();
     private final String modid;
 
-    protected TEFixer(String modid) {
+    protected TEFixer(String modid, MekFixers fixer) {
+        super(fixer);
         this.modid = modid;
     }
 
@@ -24,15 +25,9 @@ public class TEFixer implements IFixableData {
     }
 
     @Override
-    public int getFixVersion() {
-        return 1;
-    }
-
-    @Override
     @Nonnull
     public NBTTagCompound fixTagCompound(@Nonnull NBTTagCompound compound) {
         String teLoc = compound.getString("id");
-
         //Fix multipart
         if (teLoc.equals("mcmultipart:multipart.ticking") || teLoc.equals("mcmultipart:multipart.nonticking")) {
             if (compound.hasKey("parts")) {
@@ -50,7 +45,6 @@ public class TEFixer implements IFixableData {
             compound.setString("id", newID);
             Mekanism.logger.info("Fixed TE from {} to {}", teLoc, newID);
         }
-
         return compound;
     }
 }

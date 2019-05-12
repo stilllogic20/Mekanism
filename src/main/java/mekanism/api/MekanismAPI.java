@@ -18,7 +18,7 @@ public class MekanismAPI {
     /**
      * The version of the api classes - may not always match the mod's version
      */
-    public static final String API_VERSION = "9.7.3";
+    public static final String API_VERSION = "9.7.5";
 
     /**
      * Mekanism debug mode
@@ -34,9 +34,7 @@ public class MekanismAPI {
         if (cardboardBoxModIgnore.contains(Objects.requireNonNull(block.getRegistryName()).getNamespace())) {
             return false;
         }
-
-        return cardboardBoxIgnore.stream()
-              .noneMatch(i -> i.block == block && (i.meta == OreDictionary.WILDCARD_VALUE || i.meta == meta));
+        return cardboardBoxIgnore.stream().noneMatch(i -> i.block == block && (i.meta == OreDictionary.WILDCARD_VALUE || i.meta == meta));
     }
 
     public static void addBoxBlacklist(@Nullable Block block, int meta) {

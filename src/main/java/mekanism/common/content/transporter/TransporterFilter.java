@@ -22,9 +22,7 @@ public abstract class TransporterFilter implements IFilter {
 
     public static TransporterFilter readFromNBT(NBTTagCompound nbtTags) {
         int type = nbtTags.getInteger("type");
-
         TransporterFilter filter = null;
-
         if (type == 0) {
             filter = new TItemStackFilter();
         } else if (type == 1) {
@@ -34,17 +32,13 @@ public abstract class TransporterFilter implements IFilter {
         } else if (type == 3) {
             filter = new TModIDFilter();
         }
-
         filter.read(nbtTags);
-
         return filter;
     }
 
     public static TransporterFilter readFromPacket(ByteBuf dataStream) {
         int type = dataStream.readInt();
-
         TransporterFilter filter = null;
-
         if (type == 0) {
             filter = new TItemStackFilter();
         } else if (type == 1) {
@@ -54,23 +48,22 @@ public abstract class TransporterFilter implements IFilter {
         } else if (type == 3) {
             filter = new TModIDFilter();
         }
-
         filter.read(dataStream);
-
         return filter;
     }
 
-    public abstract boolean canFilter(ItemStack itemStack, boolean strict);
+    public boolean canFilter(ItemStack itemStack, boolean strict) {
+        return !itemStack.isEmpty();
+    }
 
     public abstract Finder getFinder();
 
-    public InvStack getStackFromInventory(StackSearcher searcher) {
-        return searcher.takeTopStack(getFinder());
+    public InvStack getStackFromInventory(StackSearcher searcher, boolean singleItem) {
+        return searcher.takeTopStack(getFinder(), singleItem ? 1 : 64);
     }
 
     public void write(NBTTagCompound nbtTags) {
         nbtTags.setBoolean("allowDefault", allowDefault);
-
         if (color != null) {
             nbtTags.setInteger("color", TransporterUtils.colors.indexOf(color));
         }
@@ -78,7 +71,6 @@ public abstract class TransporterFilter implements IFilter {
 
     protected void read(NBTTagCompound nbtTags) {
         allowDefault = nbtTags.getBoolean("allowDefault");
-
         if (nbtTags.hasKey("color")) {
             color = TransporterUtils.colors.get(nbtTags.getInteger("color"));
         }
@@ -86,7 +78,6 @@ public abstract class TransporterFilter implements IFilter {
 
     public void write(TileNetworkList data) {
         data.add(allowDefault);
-
         if (color != null) {
             data.add(TransporterUtils.colors.indexOf(color));
         } else {
@@ -96,9 +87,7 @@ public abstract class TransporterFilter implements IFilter {
 
     protected void read(ByteBuf dataStream) {
         allowDefault = dataStream.readBoolean();
-
         int c = dataStream.readInt();
-
         if (c != -1) {
             color = TransporterUtils.colors.get(c);
         } else {

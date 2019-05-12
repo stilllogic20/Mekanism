@@ -81,16 +81,13 @@ public class GuiTItemStackFilter extends GuiItemStackFilter<TItemStackFilter, Ti
                     if (isNew) {
                         Mekanism.packetHandler.sendToServer(new NewFilterMessage(Coord4D.get(tileEntity), filter));
                     } else {
-                        Mekanism.packetHandler
-                              .sendToServer(new EditFilterMessage(Coord4D.get(tileEntity), false, origFilter, filter));
+                        Mekanism.packetHandler.sendToServer(new EditFilterMessage(Coord4D.get(tileEntity), false, origFilter, filter));
                     }
-                    Mekanism.packetHandler.sendToServer(
-                          new LogisticalSorterGuiMessage(SorterGuiPacket.SERVER, Coord4D.get(tileEntity), 0, 0, 0));
+                    Mekanism.packetHandler.sendToServer(new LogisticalSorterGuiMessage(SorterGuiPacket.SERVER, Coord4D.get(tileEntity), 0, 0, 0));
                 } else if (min > max) {
                     status = EnumColor.DARK_RED + "Max<min";
                     ticker = 20;
-                } else //if(max > 64 || min > 64)
-                {
+                } else { //if(max > 64 || min > 64)
                     status = EnumColor.DARK_RED + "Max>64";
                     ticker = 20;
                 }
@@ -103,8 +100,7 @@ public class GuiTItemStackFilter extends GuiItemStackFilter<TItemStackFilter, Ti
             }
         } else if (guibutton.id == 1) {
             Mekanism.packetHandler.sendToServer(new EditFilterMessage(Coord4D.get(tileEntity), true, origFilter, null));
-            Mekanism.packetHandler.sendToServer(
-                  new LogisticalSorterGuiMessage(SorterGuiPacket.SERVER, Coord4D.get(tileEntity), 0, 0, 0));
+            Mekanism.packetHandler.sendToServer(new LogisticalSorterGuiMessage(SorterGuiPacket.SERVER, Coord4D.get(tileEntity), 0, 0, 0));
         }
     }
 
@@ -121,15 +117,19 @@ public class GuiTItemStackFilter extends GuiItemStackFilter<TItemStackFilter, Ti
 
     @Override
     protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
-        fontRenderer.drawString(
-              (isNew ? LangUtils.localize("gui.new") : LangUtils.localize("gui.edit")) + " " + LangUtils
-                    .localize("gui.itemFilter"), 43, 6, 0x404040);
+        fontRenderer.drawString((isNew ? LangUtils.localize("gui.new") : LangUtils.localize("gui.edit")) + " " +
+                                LangUtils.localize("gui.itemFilter"), 43, 6, 0x404040);
         fontRenderer.drawString(LangUtils.localize("gui.status") + ": " + status, 35, 20, 0x00CD00);
         fontRenderer.drawString(LangUtils.localize("gui.itemFilter.details") + ":", 35, 32, 0x00CD00);
         fontRenderer.drawString(LangUtils.localize("gui.itemFilter.min") + ":", 128, 20, 0x404040);
         fontRenderer.drawString(LangUtils.localize("gui.itemFilter.max") + ":", 128, 32, 0x404040);
-        fontRenderer.drawString(LangUtils.localize("gui." + (filter.sizeMode ? "on" : "off")), 141, 46, 0x404040);
-        fontRenderer.drawString(LangUtils.localize("gui." + (filter.allowDefault ? "on" : "off")), 24, 66, 0x404040);
+        String sizeModeString = LangUtils.transOnOff(filter.sizeMode);
+        if (tileEntity.singleItem && filter.sizeMode) {
+            sizeModeString = EnumColor.RED + sizeModeString + "!";
+        }
+
+        fontRenderer.drawString(sizeModeString, 141, 46, 0x404040);
+        fontRenderer.drawString(LangUtils.transOnOff(filter.allowDefault), 24, 66, 0x404040);
         if (!filter.itemType.isEmpty()) {
             renderScaledText(filter.itemType.getDisplayName(), 35, 41, 0x00CD00, 89);
             GlStateManager.pushMatrix();
@@ -148,10 +148,14 @@ public class GuiTItemStackFilter extends GuiItemStackFilter<TItemStackFilter, Ti
             GL11.glDisable(GL11.GL_LIGHTING);
             GlStateManager.popMatrix();
         }
-        int xAxis = (mouseX - (width - xSize) / 2);
-        int yAxis = (mouseY - (height - ySize) / 2);
+        int xAxis = mouseX - (width - xSize) / 2;
+        int yAxis = mouseY - (height - ySize) / 2;
         if (xAxis >= 128 && xAxis <= 139 && yAxis >= 44 && yAxis <= 55) {
-            drawHoveringText(LangUtils.localize("gui.sizeMode"), xAxis, yAxis);
+            String sizeModeTooltip = LangUtils.localize("gui.sizeMode");
+            if (tileEntity.singleItem && filter.sizeMode) {
+                sizeModeTooltip += " - " + LangUtils.localize("mekanism.gui.sizeModeConflict");
+            }
+            drawHoveringText(MekanismUtils.splitTooltip(sizeModeTooltip, ItemStack.EMPTY), xAxis, yAxis);
         }
         if (xAxis >= 11 && xAxis <= 22 && yAxis >= 64 && yAxis <= 75) {
             drawHoveringText(LangUtils.localize("gui.allowDefault"), xAxis, yAxis);
@@ -180,8 +184,8 @@ public class GuiTItemStackFilter extends GuiItemStackFilter<TItemStackFilter, Ti
         int guiWidth = (width - xSize) / 2;
         int guiHeight = (height - ySize) / 2;
         drawTexturedModalRect(guiWidth, guiHeight, 0, 0, xSize, ySize);
-        int xAxis = (mouseX - (width - xSize) / 2);
-        int yAxis = (mouseY - (height - ySize) / 2);
+        int xAxis = mouseX - (width - xSize) / 2;
+        int yAxis = mouseY - (height - ySize) / 2;
         if (xAxis >= 5 && xAxis <= 16 && yAxis >= 5 && yAxis <= 16) {
             drawTexturedModalRect(guiWidth + 5, guiHeight + 5, 176, 0, 11, 11);
         } else {
@@ -220,14 +224,12 @@ public class GuiTItemStackFilter extends GuiItemStackFilter<TItemStackFilter, Ti
         super.mouseClicked(mouseX, mouseY, button);
         minField.mouseClicked(mouseX, mouseY, button);
         maxField.mouseClicked(mouseX, mouseY, button);
-        int xAxis = (mouseX - (width - xSize) / 2);
-        int yAxis = (mouseY - (height - ySize) / 2);
+        int xAxis = mouseX - (width - xSize) / 2;
+        int yAxis = mouseY - (height - ySize) / 2;
         if (button == 0) {
             if (xAxis >= 5 && xAxis <= 16 && yAxis >= 5 && yAxis <= 16) {
                 SoundHandler.playSound(SoundEvents.UI_BUTTON_CLICK);
-                Mekanism.packetHandler.sendToServer(
-                      new LogisticalSorterGuiMessage(SorterGuiPacket.SERVER, Coord4D.get(tileEntity), isNew ? 4 : 0, 0,
-                            0));
+                Mekanism.packetHandler.sendToServer(new LogisticalSorterGuiMessage(SorterGuiPacket.SERVER, Coord4D.get(tileEntity), isNew ? 4 : 0, 0, 0));
             }
             if (xAxis >= 12 && xAxis <= 28 && yAxis >= 19 && yAxis <= 35) {
                 ItemStack stack = mc.player.inventory.getItemStack();

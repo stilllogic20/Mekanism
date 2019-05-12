@@ -39,7 +39,11 @@ public enum TransmissionType {
     }
 
     public String localize() {
-        return I18n.translateToLocal("transmission." + getTransmission());
+        return I18n.translateToLocal(getTranslationKey());
+    }
+
+    public String getTranslationKey() {
+        return "transmission." + getTransmission();
     }
 
     public boolean checkTransmissionType(ITransmitter transmitter) {
@@ -47,10 +51,6 @@ public enum TransmissionType {
     }
 
     public boolean checkTransmissionType(TileEntity sideTile, TileEntity currentTile) {
-        if (sideTile instanceof ITransmitter) {
-            return ((ITransmitter) sideTile).getTransmissionType() == this;
-        }
-
-        return false;
+        return sideTile instanceof ITransmitter && ((ITransmitter) sideTile).getTransmissionType() == this;
     }
 }

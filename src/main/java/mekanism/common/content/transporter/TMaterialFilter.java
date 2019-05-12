@@ -23,11 +23,9 @@ public class TMaterialFilter extends TransporterFilter implements IMaterialFilte
 
     @Override
     public boolean canFilter(ItemStack itemStack, boolean strict) {
-        if (itemStack.isEmpty() || !(itemStack.getItem() instanceof ItemBlock)) {
-            return false;
-        }
-
-        return new MaterialFinder(getMaterial()).modifies(itemStack);
+        return super.canFilter(itemStack, strict) &&
+               (itemStack.getItem() instanceof ItemBlock) &&
+               new MaterialFinder(getMaterial()).modifies(itemStack);
     }
 
     @Override
@@ -38,7 +36,6 @@ public class TMaterialFilter extends TransporterFilter implements IMaterialFilte
     @Override
     public void write(NBTTagCompound nbtTags) {
         super.write(nbtTags);
-
         nbtTags.setInteger("type", 2);
         materialItem.writeToNBT(nbtTags);
     }
@@ -46,7 +43,6 @@ public class TMaterialFilter extends TransporterFilter implements IMaterialFilte
     @Override
     protected void read(NBTTagCompound nbtTags) {
         super.read(nbtTags);
-
         materialItem = new ItemStack(nbtTags);
     }
 
@@ -55,7 +51,6 @@ public class TMaterialFilter extends TransporterFilter implements IMaterialFilte
         data.add(2);
 
         super.write(data);
-
         data.add(MekanismUtils.getID(materialItem));
         data.add(materialItem.getCount());
         data.add(materialItem.getItemDamage());
@@ -64,9 +59,7 @@ public class TMaterialFilter extends TransporterFilter implements IMaterialFilte
     @Override
     protected void read(ByteBuf dataStream) {
         super.read(dataStream);
-
-        materialItem = new ItemStack(Item.getItemById(dataStream.readInt()), dataStream.readInt(),
-              dataStream.readInt());
+        materialItem = new ItemStack(Item.getItemById(dataStream.readInt()), dataStream.readInt(), dataStream.readInt());
     }
 
     @Override
@@ -80,8 +73,7 @@ public class TMaterialFilter extends TransporterFilter implements IMaterialFilte
 
     @Override
     public boolean equals(Object filter) {
-        return super.equals(filter) && filter instanceof TMaterialFilter && ((TMaterialFilter) filter).materialItem
-              .isItemEqual(materialItem);
+        return super.equals(filter) && filter instanceof TMaterialFilter && ((TMaterialFilter) filter).materialItem.isItemEqual(materialItem);
     }
 
     @Override
@@ -90,7 +82,6 @@ public class TMaterialFilter extends TransporterFilter implements IMaterialFilte
         filter.allowDefault = allowDefault;
         filter.color = color;
         filter.materialItem = materialItem;
-
         return filter;
     }
 

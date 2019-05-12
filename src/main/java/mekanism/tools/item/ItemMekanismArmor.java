@@ -69,11 +69,9 @@ public class ItemMekanismArmor extends ItemArmor {
     public ModelBiped getArmorModel(EntityLivingBase entityLiving, ItemStack itemStack, EntityEquipmentSlot armorSlot,
           ModelBiped _default) {
         if (itemStack.getItem() == ToolsItems.GlowstoneHelmet || itemStack.getItem() == ToolsItems.GlowstoneChestplate
-              ||
-              itemStack.getItem() == ToolsItems.GlowstoneLeggings || itemStack.getItem() == ToolsItems.GlowstoneBoots) {
+            || itemStack.getItem() == ToolsItems.GlowstoneLeggings || itemStack.getItem() == ToolsItems.GlowstoneBoots) {
             return ModelCustomArmor.getGlow(armorSlot);
         }
-
         return super.getArmorModel(entityLiving, itemStack, armorSlot, _default);
     }
 }

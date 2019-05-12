@@ -45,8 +45,7 @@ public class RenderEnergyCubeItem extends MekanismItemStackRenderer {
 
         for (EnumFacing side : EnumFacing.VALUES) {
             MekanismRenderer.bindTexture(RenderEnergyCube.baseTexture);
-            energyCube.renderSide(0.0625F, side, side == EnumFacing.NORTH ? IOState.OUTPUT : IOState.INPUT, tier,
-                  Minecraft.getMinecraft().renderEngine);
+            energyCube.renderSide(0.0625F, side, side == EnumFacing.NORTH ? IOState.OUTPUT : IOState.INPUT, tier, Minecraft.getMinecraft().renderEngine);
         }
 
         MekanismRenderer.blendOff();
@@ -65,8 +64,7 @@ public class RenderEnergyCubeItem extends MekanismItemStackRenderer {
 
             GlStateManager.pushMatrix();
             GlStateManager.scale(0.4F, 0.4F, 0.4F);
-            GL11.glColor4f(c[0] / 255F, c[1] / 255F, c[2] / 255F,
-                  (float) (energy / tier.getMaxEnergy()));
+            GL11.glColor4f(c[0] / 255F, c[1] / 255F, c[2] / 255F, (float) (energy / tier.getMaxEnergy()));
             GlStateManager.translate(0, MathHelper.sin((float) Math.toRadians(MekanismClient.ticksPassed * 3)) / 7F, 0);
             GlStateManager.rotate(MekanismClient.ticksPassed * 4, 0, 1, 0);
             GlStateManager.rotate(36F + MekanismClient.ticksPassed * 4, 0, 1, 1);

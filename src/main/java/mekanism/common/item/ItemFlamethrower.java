@@ -16,6 +16,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -33,16 +34,12 @@ public class ItemFlamethrower extends ItemMekanism implements IGasItem {
     @SideOnly(Side.CLIENT)
     public void addInformation(ItemStack itemstack, World world, List<String> list, ITooltipFlag flag) {
         GasStack gasStack = getGas(itemstack);
-
         if (gasStack == null) {
             list.add(LangUtils.localize("tooltip.noGas") + ".");
         } else {
-            list.add(LangUtils.localize("tooltip.stored") + " " + gasStack.getGas().getLocalizedName() + ": "
-                  + gasStack.amount);
+            list.add(LangUtils.localize("tooltip.stored") + " " + gasStack.getGas().getLocalizedName() + ": " + gasStack.amount);
         }
-
-        list.add(EnumColor.GREY + LangUtils.localize("tooltip.mode") + ": " + EnumColor.GREY + getMode(itemstack)
-              .getName());
+        list.add(EnumColor.GREY + LangUtils.localize("tooltip.mode") + ": " + EnumColor.GREY + getMode(itemstack).getName());
     }
 
     public void useGas(ItemStack stack) {
@@ -66,14 +63,11 @@ public class ItemFlamethrower extends ItemMekanism implements IGasItem {
         if (getGas(itemstack) != null && getGas(itemstack).getGas() != stack.getGas()) {
             return 0;
         }
-
         if (stack.getGas() != MekanismFluids.Hydrogen) {
             return 0;
         }
-
         int toUse = Math.min(getMaxGas(itemstack) - getStored(itemstack), Math.min(getRate(itemstack), stack.amount));
         setGas(itemstack, new GasStack(stack.getGas(), getStored(itemstack) + toUse));
-
         return toUse;
     }
 
@@ -123,7 +117,6 @@ public class ItemFlamethrower extends ItemMekanism implements IGasItem {
         } else {
             int amount = Math.max(0, Math.min(stack.amount, getMaxGas(itemstack)));
             GasStack gasStack = new GasStack(stack.getGas(), amount);
-
             ItemDataUtils.setCompound(itemstack, "stored", gasStack.write(new NBTTagCompound()));
         }
     }
@@ -179,6 +172,12 @@ public class ItemFlamethrower extends ItemMekanism implements IGasItem {
 
         public String getName() {
             return color + LangUtils.localize(unlocalized);
+        }
+
+        public TextComponentTranslation getTextComponent() {
+            TextComponentTranslation component = new TextComponentTranslation(unlocalized);
+            component.getStyle().setColor(color.textFormatting);
+            return component;
         }
     }
 }
