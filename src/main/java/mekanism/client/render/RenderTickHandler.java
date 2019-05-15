@@ -117,7 +117,6 @@ public class RenderTickHandler {
                 }
 
                 // Traverse a copy of jetpack state and do animations
-                // TODO: This means we're making a full copy of the state per render....might need to revisit
                 for (UUID uuid : Mekanism.playerState.getActiveJetpacks()) {
                     EntityPlayer p = mc.world.getPlayerEntityByUUID(uuid);
 
