@@ -509,7 +509,10 @@ public class EntityRobit extends EntityCreature implements IInventory, ISustaine
     }
 
     public EntityPlayer getOwner() {
-        return world.getPlayerEntityByUUID(getOwnerUUID());
+        UUID uuid = getOwnerUUID();
+        if (uuid == null)
+            return null;
+        return world.getPlayerEntityByUUID(uuid);
     }
 
     public String getOwnerName() {
@@ -517,7 +520,10 @@ public class EntityRobit extends EntityCreature implements IInventory, ISustaine
     }
 
     public UUID getOwnerUUID() {
-        return UUID.fromString(dataManager.get(OWNER_UUID));
+        String uuid = dataManager.get(OWNER_UUID);
+        if (uuid.isEmpty())
+            return null;
+        return UUID.fromString(uuid);
     }
 
     public void setOwnerUUID(UUID uuid) {
