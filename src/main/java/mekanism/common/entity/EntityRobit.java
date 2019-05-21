@@ -8,6 +8,8 @@ import java.math.RoundingMode;
 import java.util.List;
 import java.util.UUID;
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
 import mekanism.api.Coord4D;
 import mekanism.api.energy.EnergizedItemManager;
 import mekanism.api.energy.IEnergizedItem;
@@ -508,6 +510,7 @@ public class EntityRobit extends EntityCreature implements IInventory, ISustaine
         dataManager.set(ELECTRICITY, (float) Math.max(Math.min(energy, MAX_ELECTRICITY), 0));
     }
 
+    @Nullable
     public EntityPlayer getOwner() {
         UUID uuid = getOwnerUUID();
         if (uuid == null)
@@ -519,6 +522,7 @@ public class EntityRobit extends EntityCreature implements IInventory, ISustaine
         return dataManager.get(OWNER_NAME);
     }
 
+    @Nullable
     public UUID getOwnerUUID() {
         String uuid = dataManager.get(OWNER_UUID);
         if (uuid.isEmpty())
