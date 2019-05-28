@@ -761,7 +761,11 @@ public final class MekanismUtils {
      * @return rounded energy display
      */
     public static String getEnergyDisplay(double energy) {
-        if (energy == Double.MAX_VALUE) {
+        if (Double.isNaN(energy)) {
+            return LangUtils.localize("NaN");
+        }
+
+        if (Double.compare(energy, Double.MAX_VALUE) >= 0) {
             return LangUtils.localize("gui.infinite");
         }
 

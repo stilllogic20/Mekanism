@@ -6,7 +6,6 @@ import ic2.api.energy.tile.IEnergyAcceptor;
 import ic2.api.energy.tile.IEnergyConductor;
 import ic2.api.energy.tile.IEnergyEmitter;
 import io.netty.buffer.ByteBuf;
-import javax.annotation.Nonnull;
 import mekanism.api.TileNetworkList;
 import mekanism.common.base.IEnergyWrapper;
 import mekanism.common.capabilities.Capabilities;
@@ -25,6 +24,8 @@ import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.Optional.Method;
+
+import javax.annotation.Nonnull;
 
 public abstract class TileEntityElectricBlock extends TileEntityContainerBlock implements IEnergyWrapper {
 
@@ -45,15 +46,15 @@ public abstract class TileEntityElectricBlock extends TileEntityContainerBlock i
 
     private boolean ic2Registered = false;
     private CapabilityWrapperManager<IEnergyWrapper, TeslaIntegration> teslaManager = new CapabilityWrapperManager<>(
-          IEnergyWrapper.class, TeslaIntegration.class);
+        IEnergyWrapper.class, TeslaIntegration.class);
     private CapabilityWrapperManager<IEnergyWrapper, ForgeEnergyIntegration> forgeEnergyManager = new CapabilityWrapperManager<>(
-          IEnergyWrapper.class, ForgeEnergyIntegration.class);
+        IEnergyWrapper.class, ForgeEnergyIntegration.class);
 
     /**
      * The base of all blocks that deal with electricity. It has a facing state, initialized state, and a current amount
      * of stored energy.
      *
-     * @param name - full name of this block
+     * @param name          - full name of this block
      * @param baseMaxEnergy - how much energy this block can store
      */
     public TileEntityElectricBlock(String name, double baseMaxEnergy) {
@@ -111,6 +112,8 @@ public abstract class TileEntityElectricBlock extends TileEntityContainerBlock i
 
     @Override
     public double getEnergy() {
+        if (Double.isNaN(electricityStored))
+            electricityStored = 334;
         return electricityStored;
     }
 
@@ -122,6 +125,8 @@ public abstract class TileEntityElectricBlock extends TileEntityContainerBlock i
 
     @Override
     public double getMaxEnergy() {
+        if (Double.isNaN(maxEnergy))
+            maxEnergy = 334;
         return maxEnergy;
     }
 
@@ -201,16 +206,16 @@ public abstract class TileEntityElectricBlock extends TileEntityContainerBlock i
     @Method(modid = MekanismHooks.REDSTONEFLUX_MOD_ID)
     public int receiveEnergy(EnumFacing from, int maxReceive, boolean simulate) {
         return MekanismUtils.clampToInt(
-                    acceptEnergy(from, maxReceive * MekanismConfig.current().general.FROM_RF.val(), simulate)
-                          * MekanismConfig.current().general.TO_RF.val());
+            acceptEnergy(from, maxReceive * MekanismConfig.current().general.FROM_RF.val(), simulate)
+                * MekanismConfig.current().general.TO_RF.val());
     }
 
     @Override
     @Method(modid = MekanismHooks.REDSTONEFLUX_MOD_ID)
     public int extractEnergy(EnumFacing from, int maxExtract, boolean simulate) {
         return MekanismUtils.clampToInt(
-                    pullEnergy(from, maxExtract * MekanismConfig.current().general.FROM_RF.val(), simulate)
-                          * MekanismConfig.current().general.TO_RF.val());
+            pullEnergy(from, maxExtract * MekanismConfig.current().general.FROM_RF.val(), simulate)
+                * MekanismConfig.current().general.TO_RF.val());
     }
 
     @Override
@@ -274,7 +279,7 @@ public abstract class TileEntityElectricBlock extends TileEntityContainerBlock i
     @Method(modid = MekanismHooks.IC2_MOD_ID)
     public boolean emitsEnergyTo(IEnergyAcceptor receiver, EnumFacing direction) {
         return !MekanismConfig.current().general.blacklistIC2.val() && sideIsOutput(direction)
-              && receiver instanceof IEnergyConductor;
+            && receiver instanceof IEnergyConductor;
     }
 
     @Override
@@ -307,14 +312,14 @@ public abstract class TileEntityElectricBlock extends TileEntityContainerBlock i
     @Method(modid = MekanismHooks.IC2_MOD_ID)
     public double getDemandedEnergy() {
         return !MekanismConfig.current().general.blacklistIC2.val() ? (getMaxEnergy() - getEnergy()) * MekanismConfig
-              .current().general.TO_IC2.val() : 0;
+            .current().general.TO_IC2.val() : 0;
     }
 
     @Override
     @Method(modid = MekanismHooks.IC2_MOD_ID)
     public double getOfferedEnergy() {
         return !MekanismConfig.current().general.blacklistIC2.val() ? Math.min(getEnergy(), getMaxOutput())
-              * MekanismConfig.current().general.TO_IC2.val() : 0;
+            * MekanismConfig.current().general.TO_IC2.val() : 0;
     }
 
     @Override
@@ -326,23 +331,23 @@ public abstract class TileEntityElectricBlock extends TileEntityContainerBlock i
     @Method(modid = MekanismHooks.IC2_MOD_ID)
     public double getOutputEnergyUnitsPerTick() {
         return !MekanismConfig.current().general.blacklistIC2.val() ? getMaxOutput() * MekanismConfig
-              .current().general.TO_IC2.val() : 0;
+            .current().general.TO_IC2.val() : 0;
     }
 
     @Override
     @Method(modid = MekanismHooks.IC2_MOD_ID)
     public double injectEnergy(EnumFacing pushDirection, double amount,
-          double voltage) {// nb: the facing param contains the side relative to the pushing block
+                               double voltage) {// nb: the facing param contains the side relative to the pushing block
         TileEntity tile = getWorld().getTileEntity(getPos().offset(pushDirection.getOpposite()));
 
         if (MekanismConfig.current().general.blacklistIC2.val() || (CapabilityUtils
-              .hasCapability(tile, Capabilities.GRID_TRANSMITTER_CAPABILITY, pushDirection))) {
+            .hasCapability(tile, Capabilities.GRID_TRANSMITTER_CAPABILITY, pushDirection))) {
             return amount;
         }
 
         return amount -
-              acceptEnergy(pushDirection.getOpposite(), amount * MekanismConfig.current().general.FROM_IC2.val(), false)
-                    * MekanismConfig.current().general.TO_IC2.val();
+            acceptEnergy(pushDirection.getOpposite(), amount * MekanismConfig.current().general.FROM_IC2.val(), false)
+                * MekanismConfig.current().general.TO_IC2.val();
     }
 
     @Override
@@ -387,7 +392,7 @@ public abstract class TileEntityElectricBlock extends TileEntityContainerBlock i
             return false;
         }
         return isStrictEnergy(capability) || capability == CapabilityEnergy.ENERGY || isTesla(capability, side) || super
-              .hasCapability(capability, side);
+            .hasCapability(capability, side);
     }
 
     @Override
@@ -406,14 +411,14 @@ public abstract class TileEntityElectricBlock extends TileEntityContainerBlock i
 
     protected boolean isStrictEnergy(@Nonnull Capability capability) {
         return capability == Capabilities.ENERGY_STORAGE_CAPABILITY
-              || capability == Capabilities.ENERGY_ACCEPTOR_CAPABILITY ||
-              capability == Capabilities.ENERGY_OUTPUTTER_CAPABILITY;
+            || capability == Capabilities.ENERGY_ACCEPTOR_CAPABILITY ||
+            capability == Capabilities.ENERGY_OUTPUTTER_CAPABILITY;
     }
 
     protected boolean isTesla(@Nonnull Capability capability, EnumFacing side) {
         return capability == Capabilities.TESLA_HOLDER_CAPABILITY
-              || (capability == Capabilities.TESLA_CONSUMER_CAPABILITY && sideIsConsumer(side))
-              || (capability == Capabilities.TESLA_PRODUCER_CAPABILITY && sideIsOutput(side));
+            || (capability == Capabilities.TESLA_CONSUMER_CAPABILITY && sideIsConsumer(side))
+            || (capability == Capabilities.TESLA_PRODUCER_CAPABILITY && sideIsOutput(side));
     }
 
     protected ForgeEnergyIntegration getForgeEnergyWrapper(EnumFacing side) {
