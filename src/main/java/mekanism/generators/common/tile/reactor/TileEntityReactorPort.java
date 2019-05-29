@@ -235,7 +235,7 @@ public class TileEntityReactorPort extends TileEntityReactorBlock implements IFl
     @Override
     public double getEnergy() {
         if (getReactor() == null) {
-            return 334;
+            return 0;
         } else {
             return getReactor().getBufferedEnergy();
         }
@@ -251,7 +251,7 @@ public class TileEntityReactorPort extends TileEntityReactorBlock implements IFl
     @Override
     public double getMaxEnergy() {
         if (getReactor() == null) {
-            return 334;
+            return 0;
         } else {
             return getReactor().getBufferSize();
         }
